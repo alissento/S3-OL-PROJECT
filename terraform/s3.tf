@@ -1,3 +1,4 @@
+# Replace API URL inside the index.html
 data "template_file" "index_html" {
   template = file("index.html")
   vars = {
@@ -51,6 +52,7 @@ resource "aws_s3_bucket_policy" "bucket_policy_for_website" {
   depends_on = [ aws_s3_bucket_public_access_block.s3b_enable_public_access ]
 }
 
+# Adding index.html to the S3 bucket
 resource "aws_s3_object" "test_index_html" {
   bucket = aws_s3_bucket.s3b.bucket
   key = "index.html"
@@ -60,6 +62,7 @@ resource "aws_s3_object" "test_index_html" {
   depends_on = [ data.template_file.index_html ]
 }
 
-output "Website URL" {
+# Output of the URL of the website
+output "website_url" {
   value = "http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"
 }

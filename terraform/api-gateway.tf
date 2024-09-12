@@ -4,7 +4,7 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" {
 
   cors_configuration {
     allow_origins = ["http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"]
-    allow_methods = ["GET"]
+    allow_methods = ["GET", "POST"]
     allow_headers = ["*"]
   }
 

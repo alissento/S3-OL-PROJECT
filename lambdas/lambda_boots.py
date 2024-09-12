@@ -1,9 +1,8 @@
 def lambda_handler(event, context):
-    print("I am working!")
-
+    print("Boots!")
     return {
         'statusCode': 200,
-        'body': "I am working!",
+        'body': "Boots!",
         'headers': {
             'Content-Type': 'text/plain'
         }
