@@ -1,25 +1,17 @@
-variable "target_region" {
-  description = "Type a desired AWS region to deploy this project"
-  type = string
-  default = "eu-central-1"
-
-  validation {
-    condition = contains(["us-east-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "sa-east-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-south-1"], var.target_region)
-    error_message = "Invalid region. Allowed regions are: us-east-1, us-east-2, us-west-1, us-west-2, ca-central-1, sa-east-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-north-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-south-1."
+data "template_file" "index_html" {
+  template = file("index.html")
+  vars = {
+    api_url = aws_apigatewayv2_api.api_gw_http_fb4u.api_endpoint
   }
 }
 
-provider "aws" {
-  region = var.target_region
-}
-
-# Define the S3 bucket
+# Defining the S3 bucket
 resource "aws_s3_bucket" "s3b" {
   bucket = "fbforyou.com"
   force_destroy = true
-
 }
 
+# Disabling public access block
 resource "aws_s3_bucket_public_access_block" "s3b_enable_public_access" {
   bucket = aws_s3_bucket.s3b.id
 
@@ -27,7 +19,7 @@ resource "aws_s3_bucket_public_access_block" "s3b_enable_public_access" {
   block_public_policy = false
 }
 
-# Define the website settings for S3 bucket
+# Defining the website settings for S3 bucket
 resource "aws_s3_bucket_website_configuration" "website_s3b" {
   bucket = aws_s3_bucket.s3b.id
 
@@ -40,7 +32,7 @@ resource "aws_s3_bucket_website_configuration" "website_s3b" {
   }
 }
 
-# Set the bucket policy for public access (if required)
+# Setting the bucket policy
 resource "aws_s3_bucket_policy" "bucket_policy_for_website" {
   bucket = aws_s3_bucket.s3b.id
 
@@ -57,4 +49,17 @@ resource "aws_s3_bucket_policy" "bucket_policy_for_website" {
   })
 
   depends_on = [ aws_s3_bucket_public_access_block.s3b_enable_public_access ]
+}
+
+resource "aws_s3_object" "test_index_html" {
+  bucket = aws_s3_bucket.s3b.bucket
+  key = "index.html"
+  content = data.template_file.index_html.rendered
+  content_type = "text/html"
+
+  depends_on = [ data.template_file.index_html ]
+}
+
+output "Website URL" {
+  value = "http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"
 }

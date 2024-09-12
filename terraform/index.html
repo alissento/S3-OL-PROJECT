@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script>
+        /* testing some code */
+        async function loadKits() {
+          const apiUrl = '${api_url}/kits';
+          try {
+            const response = await fetch(apiUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+    
+            const data = await response.text();
+            document.getElementById('kits-content').textContent = data;
+          } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('kits-content').textContent = 'Error fetching kits.';
+          }
+        }
+        
+        function goToKits() {
+            window.history.pushState({}, '', '/kits');
+            loadKits();
+        }
+
+        window.onload = function () {
+          if (window.location.pathname === '/kits') {
+            loadKits();
+          }
+        };
+      </script>
+</head>
+<body>
+    <p>This is a test index.html</p>
+    <p>Type /kits /boots /accessories to test stuff</p>
+    <p onclick="goToKits()">Kits</p>
+    <div id="kits-content"></div>
+</body>
+</html>
