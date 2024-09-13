@@ -1,6 +1,6 @@
 # Replace API URL inside the index.html
-data "template_file" "index_html" {
-  template = file("index.html")
+data "template_file" "script_js" {
+  template = file("../website/script.js")
   vars = {
     api_url = aws_apigatewayv2_api.api_gw_http_fb4u.api_endpoint
   }
@@ -10,6 +10,14 @@ data "template_file" "index_html" {
 resource "aws_s3_bucket" "s3b" {
   bucket = "fbforyou.com"
   force_destroy = true
+}
+
+resource "aws_s3_bucket_cors_configuration" "s3_cors" {
+  bucket = aws_s3_bucket.s3b.id
+  cors_rule {
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+  }
 }
 
 # Disabling public access block
@@ -56,10 +64,19 @@ resource "aws_s3_bucket_policy" "bucket_policy_for_website" {
 resource "aws_s3_object" "test_index_html" {
   bucket = aws_s3_bucket.s3b.bucket
   key = "index.html"
-  content = data.template_file.index_html.rendered
+  source = "../website/index.html"
   content_type = "text/html"
 
-  depends_on = [ data.template_file.index_html ]
+  depends_on = [ data.template_file.script_js ]
+}
+
+resource "aws_s3_object" "test_js_script" {
+  bucket = aws_s3_bucket.s3b.bucket
+  key = "script.js"
+  content = data.template_file.script_js.rendered
+  content_type = "application/javascript"
+
+  depends_on = [ data.template_file.script_js ]
 }
 
 # Output of the URL of the website

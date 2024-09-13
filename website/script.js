@@ -1,6 +1,8 @@
 async function loadStuff(api_route) 
 {
-    const apiUrl = '${api_url}'+api_route;
+    window.history.pushState({}, '', api_route);
+    const apiURLTerraform = '${api_url}'
+    const apiUrl = apiURLTerraform+api_route;
     try 
     {
         const response = await fetch(apiUrl, 
@@ -8,7 +10,7 @@ async function loadStuff(api_route)
             method: 'GET',
             headers: 
             {
-                'Content-Type': 'application/json'
+                'Content-Type': 'text/plain'
             }
         });
     
@@ -20,17 +22,3 @@ async function loadStuff(api_route)
         document.getElementById('content').textContent = 'Error with fetching.';
     }
 }
-
-function goToStuff(route) 
-{
-    window.history.pushState({}, '', route);
-    loadStuff(route);
-}
-
-window.onload = function () 
-{
-    if (window.location.pathname === '/kits') 
-    {
-        loadStuff();
-    }
-};
