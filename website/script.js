@@ -10,12 +10,12 @@ async function loadStuff(api_route)
             method: 'GET',
             headers: 
             {
-                'Content-Type': 'text/plain'
+                'Accept': 'application/json'
             }
         });
     
-    const data = await response.text();
-    document.getElementById('content').textContent = data;
+    const data = await response.json();
+    document.getElementById('content').textContent = JSON.stringify(data, null, 2);
     } catch (error) 
     {
         console.error('Error:', error);
