@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: karantina, serif;
+    text-transform: uppercase;
+}
+
+header {
+    background-color: black;
+    color: white;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+}
+
+#football_image, #user_icon, #cart_icon {
+    width: 80px;
+    height: auto;
+    margin: 10px;
+}
+
+#logo_text {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+    }
+
+
+nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 50px;
+    font-size: 40px;
+    letter-spacing: 2px;
+}
+
+main {
+    height: 60%;
+    width: 100%;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-size: 40px;
+}
+
+#footer1, #footer2, #footer3 {
+    flex: 1;
+    text-align: center;
+}
+
+#footer1 {
+    text-align: left;
+    margin-left: 40px;
+}
+
+#footer3 {
+    text-align: right;
+    margin-right: 40px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
