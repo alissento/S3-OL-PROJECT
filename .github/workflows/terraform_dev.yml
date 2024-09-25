@@ -32,7 +32,9 @@ jobs:
         aws-region: 'eu-central-1'
         
     - name: Terraform Init
-      run: terraform init
+      run: |
+        cd terraform 
+        terraform init
       
     - name: Terraform Format
       run: terraform fmt -check
