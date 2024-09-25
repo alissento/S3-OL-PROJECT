@@ -101,3 +101,6 @@ resource "aws_s3_object" "photos_upload" {
 output "website_url" {
   value = "http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"
 }
+
+
+# Comment just to test the CI pipeline
