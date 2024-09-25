@@ -1,8 +1,8 @@
 resource "aws_dynamodb_table" "fb4u_products" {
-  name = "fb4u_products"
-  read_capacity = 5
+  name           = "fb4u_products"
+  read_capacity  = 5
   write_capacity = 5
-  hash_key = "team"
+  hash_key       = "team"
 
   attribute {
     name = "team"
@@ -12,8 +12,8 @@ resource "aws_dynamodb_table" "fb4u_products" {
 
 resource "aws_dynamodb_table_item" "test_item" {
   table_name = aws_dynamodb_table.fb4u_products.name
-  hash_key = aws_dynamodb_table.fb4u_products.hash_key
-  item = <<ITEM
+  hash_key   = aws_dynamodb_table.fb4u_products.hash_key
+  item       = <<ITEM
   {
     "team": {"S": "Barcelona"},
     "price": {"N": "100"},

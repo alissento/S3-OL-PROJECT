@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "api_gw_http_fb4u" {
-  name = "api-gateway-http-fb4u"
+  name          = "api-gateway-http-fb4u"
   protocol_type = "HTTP"
 
   cors_configuration {
@@ -9,72 +9,72 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" {
     allow_headers = ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
   }
 
-  depends_on = [ aws_s3_bucket_website_configuration.website_s3b ]
+  depends_on = [aws_s3_bucket_website_configuration.website_s3b]
 }
 
 resource "aws_apigatewayv2_integration" "kits_listing_integration" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
   integration_type = "AWS_PROXY"
-  integration_uri = aws_lambda_function.list_kits.invoke_arn
+  integration_uri  = aws_lambda_function.list_kits.invoke_arn
 }
 
 resource "aws_apigatewayv2_integration" "boots_listing_integration" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
   integration_type = "AWS_PROXY"
-  integration_uri = aws_lambda_function.list_boots.invoke_arn
+  integration_uri  = aws_lambda_function.list_boots.invoke_arn
 }
 
 resource "aws_apigatewayv2_integration" "accessories_listing_integration" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
   integration_type = "AWS_PROXY"
-  integration_uri = aws_lambda_function.list_accessories.invoke_arn
+  integration_uri  = aws_lambda_function.list_accessories.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "route_kits" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
   route_key = "GET /kits"
-  target = "integrations/${aws_apigatewayv2_integration.kits_listing_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.kits_listing_integration.id}"
 }
 
 resource "aws_apigatewayv2_route" "boots_kits" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
   route_key = "GET /boots"
-  target = "integrations/${aws_apigatewayv2_integration.boots_listing_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.boots_listing_integration.id}"
 }
 
 resource "aws_apigatewayv2_route" "accessories_kits" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
   route_key = "GET /accessories"
-  target = "integrations/${aws_apigatewayv2_integration.accessories_listing_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.accessories_listing_integration.id}"
 }
 
 resource "aws_lambda_permission" "kits_api_gateway_permission" {
-  statement_id = "AllowExecutionFromAPIGateway"
-  action = "lambda:InvokeFunction"
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.list_kits.function_name
-  principal = "apigateway.amazonaws.com"
-  source_arn = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }
 
 resource "aws_lambda_permission" "boots_api_gateway_permission" {
-  statement_id = "AllowExecutionFromAPIGateway"
-  action = "lambda:InvokeFunction"
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.list_boots.function_name
-  principal = "apigateway.amazonaws.com"
-  source_arn = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }
 
 resource "aws_lambda_permission" "accessories_api_gateway_permission" {
-  statement_id = "AllowExecutionFromAPIGateway"
-  action = "lambda:InvokeFunction"
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.list_accessories.function_name
-  principal = "apigateway.amazonaws.com"
-  source_arn = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }
 
 resource "aws_apigatewayv2_stage" "default_stage" {
-  api_id = aws_apigatewayv2_api.api_gw_http_fb4u.id
-  name = "$default"
+  api_id      = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  name        = "$default"
   auto_deploy = true
 }
 
