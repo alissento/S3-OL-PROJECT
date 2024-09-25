@@ -61,7 +61,7 @@ resource "aws_s3_bucket_policy" "bucket_policy_for_website" {
 }
 
 # Adding index.html to the S3 bucket
-resource "aws_s3_object" "test_index_html" {
+resource "aws_s3_object" "index_html_upload" {
   bucket = aws_s3_bucket.s3b.bucket
   key = "index.html"
   source = "../website/index.html"
@@ -70,11 +70,29 @@ resource "aws_s3_object" "test_index_html" {
   depends_on = [ data.template_file.script_js ]
 }
 
-resource "aws_s3_object" "test_js_script" {
+resource "aws_s3_object" "js_script_upload" {
   bucket = aws_s3_bucket.s3b.bucket
   key = "script.js"
   content = data.template_file.script_js.rendered
   content_type = "application/javascript"
+
+  depends_on = [ data.template_file.script_js ]
+}
+
+resource "aws_s3_object" "css_upload" {
+  bucket = aws_s3_bucket.s3b.bucket
+  key = "style.css"
+  source = "../website/style.css"
+  content_type = "text/css"
+
+  depends_on = [ data.template_file.script_js ]
+}
+
+resource "aws_s3_object" "photos_upload" {
+  for_each = fileset("../website/images/", "**")
+  bucket = aws_s3_bucket.s3b.bucket
+  key = "images/${each.key}"
+  source = "../website/images/${each.value}"
 
   depends_on = [ data.template_file.script_js ]
 }

@@ -15,10 +15,10 @@ async function loadStuff(api_route)
         });
     
     const data = await response.json();
-    document.getElementById('content').textContent = JSON.stringify(data, null, 2);
+    document.getElementById('main_content').textContent = JSON.stringify(data, null, 2);
     } catch (error) 
     {
         console.error('Error:', error);
-        document.getElementById('content').textContent = 'Error with fetching.';
+        document.getElementById('main_content').textContent = 'Error with fetching.';
     }
 }
