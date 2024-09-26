@@ -2,22 +2,24 @@ resource "aws_dynamodb_table" "fb4u_products" {
   name           = "fb4u_products"
   read_capacity  = 5
   write_capacity = 5
-  hash_key       = "team"
+  hash_key       = "product_id"
 
   attribute {
-    name = "team"
+    name = "product_id"
     type = "S"
   }
-}
 
-resource "aws_dynamodb_table_item" "test_item" {
-  table_name = aws_dynamodb_table.fb4u_products.name
-  hash_key   = aws_dynamodb_table.fb4u_products.hash_key
-  item       = <<ITEM
-  {
-    "team": {"S": "Barcelona"},
-    "price": {"N": "100"},
-    "photo": {"S": "examplelink"}
+  attribute {
+    name = "team_name"
+    type = "S"
   }
-  ITEM
+
+  global_secondary_index {
+    name               = "fb4u_teams"
+    hash_key           = "team_name"
+    write_capacity     = 5
+    read_capacity      = 5
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["product_id"]
+  }
 }

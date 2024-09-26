@@ -1,0 +1,34 @@
+[
+    {
+      "product_id": "1",
+      "team_name": "Barcelona",
+      "side": "home",
+      "season": "24/25",
+      "price": 100,
+      "photo_link": "examplelinkbarca"
+    },
+    {
+      "product_id": "2",
+      "team_name": "Real",
+      "side": "away",
+      "season": "24/25",
+      "price": 100,
+      "photo_link": "examplelinkreal"
+    },
+    {
+      "product_id": "3",
+      "team_name": "Arsenal",
+      "side": "home",
+      "season": "24/25",
+      "price": 110,
+      "photo_link": "examplelinkarsenal"
+    },
+    {
+      "product_id": "4",
+      "team_name": "PSV",
+      "side": "home",
+      "season": "24/25",
+      "price": 90,
+      "photo_link": "examplelinkphoto"
+    }
+]
