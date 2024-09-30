@@ -1,34 +1,44 @@
 [
     {
       "product_id": "1",
-      "team_name": "Barcelona",
+      "team_name": "FC Barcelona",
       "side": "home",
       "season": "24/25",
-      "price": 100,
-      "photo_link": "examplelinkbarca"
+      "price": 100
     },
     {
       "product_id": "2",
-      "team_name": "Real",
-      "side": "away",
+      "team_name": "Real Madrid",
+      "side": "home",
       "season": "24/25",
-      "price": 100,
-      "photo_link": "examplelinkreal"
+      "price": 100
     },
     {
       "product_id": "3",
       "team_name": "Arsenal",
       "side": "home",
       "season": "24/25",
-      "price": 110,
-      "photo_link": "examplelinkarsenal"
+      "price": 110
     },
     {
       "product_id": "4",
       "team_name": "PSV",
       "side": "home",
       "season": "24/25",
-      "price": 90,
-      "photo_link": "examplelinkphoto"
+      "price": 90
+    },
+    {
+      "product_id": "5",
+      "team_name": "Borussia Dortmund",
+      "side": "home",
+      "season": "23/24",
+      "price": 60
+    },
+    {
+      "product_id": "6",
+      "team_name": "Bayern Munchen",
+      "side": "home",
+      "season": "24/25",
+      "price": 80
     }
 ]
