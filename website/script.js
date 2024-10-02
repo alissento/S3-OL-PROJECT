@@ -18,22 +18,23 @@ async function loadStuff(api_route) {
 
     products.forEach(product => {
         const productDiv = document.createElement('div');
-        productDiv.className = 'product';
+        productDiv.className = 'flex flex-col items-center text-center m-5';
 
         const img = document.createElement('img');
         img.src = `images/$${product.photoID}`;
         img.alt = product.teamLabel;
+        img.className = 'h-64 w-56 mb-2.5 rounded-[10%] border-2 border-black cursor-pointer';
         img.onclick = () => loadProductPage(product.product_id);
 
         productDiv.appendChild(img);
 
         const label = document.createElement('p');
-        label.className = 'teamLabel';
+        label.className = 'text-2xl font-bold text-center';
         label.textContent = product.teamLabel;
         productDiv.appendChild(label);
 
         const price = document.createElement('p');
-        price.className = 'priceLabel';
+        price.className = 'text-3xl font-bold text-center';
         price.textContent = `$${product.price}€`;
         productDiv.appendChild(price);
         mainContent.appendChild(productDiv);

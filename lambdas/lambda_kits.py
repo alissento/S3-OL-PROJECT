@@ -16,7 +16,8 @@ def lambda_handler(event, context):
             product_id = kit['product_id']
             team_name = kit['team_name']
             season = kit['season']
-            teamLabel = f"{team_name} {season}"
+            side = kit['side']
+            teamLabel = f"{team_name} {side} {season}"
             price = kit['price']
             photoID = f"{product_id}.png"
             products.append({

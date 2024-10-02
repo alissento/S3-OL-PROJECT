@@ -24,21 +24,63 @@
       "product_id": "4",
       "team_name": "PSV",
       "side": "home",
-      "season": "24/25",
-      "price": 90
+      "season": "23/24",
+      "price": 70
     },
     {
       "product_id": "5",
       "team_name": "Borussia Dortmund",
       "side": "home",
+      "season": "24/25",
+      "price": 90
+    },
+    {
+      "product_id": "6",
+      "team_name": "Borussia Dortmund",
+      "side": "away",
+      "season": "24/25",
+      "price": 90
+    },
+    {
+      "product_id": "7",
+      "team_name": "Bayern Munchen",
+      "side": "home",
+      "season": "24/25",
+      "price": 90
+    },
+    {
+      "product_id": "8",
+      "team_name": "PSG",
+      "side": "home",
+      "season": "13/14",
+      "price": 160
+    },
+    {
+      "product_id": "9",
+      "team_name": "Benfica",
+      "side": "third",
+      "season": "24/15",
+      "price": 90
+    },
+    {
+      "product_id": "10",
+      "team_name": "Juventus",
+      "side": "home",
+      "season": "22/23",
+      "price": 50
+    },
+    {
+      "product_id": "11",
+      "team_name": "AS Roma",
+      "side": "home",
       "season": "23/24",
       "price": 60
     },
     {
-      "product_id": "6",
-      "team_name": "Bayern Munchen",
+      "product_id": "12",
+      "team_name": "AC Milan",
       "side": "home",
-      "season": "24/25",
-      "price": 80
+      "season": "23/24",
+      "price": 60
     }
 ]

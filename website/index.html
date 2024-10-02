@@ -9,30 +9,44 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
-<body>
-    <header>
-        <div id="logo">
-            <img id="football_image" src="images/football_image.png" alt="football image">
-            <p id="logo_text">FOOTBALL<br>FOR YOU</p>
+<body class="h-full flex flex-col font-karantina uppercase">
+    <header class="bg-black text-white flex justify-between items-center">
+        <div id="logo" class="flex items-center">
+            <img id="football_image" src="images/football_image.png" class="w-16 h-auto m-2.5" alt="football image">
+            <div class="text-2xl font-bold text-center tracking-wider">
+                FOOTBALL<br>FOR YOU
+            </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="loadStuff('/kits')">Kits</a></li>
-                <li><a href="#" onclick="loadStuff('/boots')">Boots</a></li>
-                <li><a href="#" onclick="loadStuff('/accessories')">Accessories</a></li>
-            </ul>
-        </nav>
-        <div class="right_section">
-            <img id="cart_icon" src="images/user_icon.png" alt="User" class="icon">
-            <img id="user_icon" src="images/shopping_cart_icon.png" alt="Cart" class="icon">
-        </div>
+      <nav>
+        <ul class="flex list-none justify-center">
+            <li class="mx-15 text-4xl tracking-wider">
+                <a href="#" onclick="loadStuff('/kits')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10">Kits</a>
+            </li>
+            <li class="mx-15 text-4xl tracking-wider">
+                <a href="#" onclick="loadStuff('/accessories')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10">Accessories</a>
+            </li>
+            <li class="mx-15 text-4xl tracking-wider">
+                <a href="#" onclick="loadStuff('/boots')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10">Boots</a>
+            </li>
+        </ul>
+      </nav>
+      <div class="flex items-center">
+        <img id="user_icon" src="images/user_icon.png" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200" alt="User">
+        <img id="cart_icon" src="images/shopping_cart_icon.png" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200" alt="Cart">
+      </div>
     </header>
-    <main id="main_content">
+    <main id="main_content" class="flex justify-center items-start flex-wrap w-full" role="main">
     </main>
-    <footer>
-        <p id="footer1">CONTACT US FOR ANY QUESTIONS!</p>
-        <p id="footer2"><a href="mailto:contact@fbforyou.com">contact@fbforyou.com</a></p>
-        <p id="footer3">+31 06 12345678</p>
+    <footer class="bg-black text-white flex justify-between items-center p-5 text-4xl">
+        <div class="flex-1 text-left ml-10">
+            CONTACT US FOR ANY QUESTIONS!
+        </div>
+        <div class="flex-1 text-center hover:brightness-50 transition-all duration-200">
+            <a href="mailto:contact@fbforyou.com" class="text-white no-underline">contact@fbforyou.com</a>
+        </div>
+        <div class="flex-1 text-right hover:brightness-50 transition-all duration-200 mr-10">
+            <a href="tel:+31061234567" class="text-white no-underline">+31 06 12345678</a>
+        </div>
     </footer>
 </body>
 </html>
