@@ -22,7 +22,7 @@ async function loadStuff(api_route) {
 
         const img = document.createElement('img');
         img.src = `images/$${product.photoID}`;
-        img.alt = product.teamLabel;
+        img.alt = product.productLabel;
         img.className = 'h-64 w-56 mb-2.5 rounded-[10%] border-2 border-black cursor-pointer';
         img.onclick = () => loadProductPage(product.product_id);
 

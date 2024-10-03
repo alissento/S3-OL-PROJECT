@@ -6,13 +6,13 @@ def lambda_handler(event, context):
     table = dynamodb.Table('fb4u_products')
 
     try:
-        response = table.scan()
-        kits = response["Items"]
-        kitsTest = simplejson.loads(simplejson.dumps(kits))
+        response = table.query(IndexName='fb4u_tag',KeyConditionExpression=Key('tag').eq('kit'))
+        data = response["Items"]
+        kits = simplejson.loads(simplejson.dumps(data))
         
         products = []
         
-        for kit in kitsTest:
+        for kit in kits:
             product_id = kit['product_id']
             team_name = kit['team_name']
             season = kit['season']
@@ -21,7 +21,7 @@ def lambda_handler(event, context):
             price = kit['price']
             photoID = f"{product_id}.png"
             products.append({
-                'teamLabel': teamLabel,
+                'productLabel': teamLabel,
                 'price': price,
                 'photoID': photoID,
                 'product_id': product_id

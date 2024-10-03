@@ -4,83 +4,102 @@
       "team_name": "FC Barcelona",
       "side": "home",
       "season": "24/25",
-      "price": 100
+      "price": 100,
+      "tag": "kit"
     },
     {
       "product_id": "2",
       "team_name": "Real Madrid",
       "side": "home",
       "season": "24/25",
-      "price": 100
+      "price": 100,
+      "tag": "kit"
     },
     {
       "product_id": "3",
       "team_name": "Arsenal",
       "side": "home",
       "season": "24/25",
-      "price": 110
+      "price": 110,
+      "tag": "kit"
     },
     {
       "product_id": "4",
       "team_name": "PSV",
       "side": "home",
       "season": "23/24",
-      "price": 70
+      "price": 70,
+      "tag": "kit"
     },
     {
       "product_id": "5",
       "team_name": "Borussia Dortmund",
       "side": "home",
       "season": "24/25",
-      "price": 90
+      "price": 90,
+      "tag": "kit"
     },
     {
       "product_id": "6",
       "team_name": "Borussia Dortmund",
       "side": "away",
       "season": "24/25",
-      "price": 90
+      "price": 90,
+      "tag": "kit"
     },
     {
       "product_id": "7",
       "team_name": "Bayern Munchen",
       "side": "home",
       "season": "24/25",
-      "price": 90
+      "price": 90,
+      "tag": "kit"
     },
     {
       "product_id": "8",
       "team_name": "PSG",
       "side": "home",
       "season": "13/14",
-      "price": 160
+      "price": 160,
+      "tag": "kit"
     },
     {
       "product_id": "9",
       "team_name": "Benfica",
       "side": "third",
       "season": "24/15",
-      "price": 90
+      "price": 90,
+      "tag": "kit"
     },
     {
       "product_id": "10",
       "team_name": "Juventus",
       "side": "home",
       "season": "22/23",
-      "price": 50
+      "price": 50,
+      "tag": "kit"
     },
     {
       "product_id": "11",
       "team_name": "AS Roma",
       "side": "home",
       "season": "23/24",
-      "price": 60
+      "price": 60,
+      "tag": "kit"
     },
     {
       "product_id": "12",
       "team_name": "AC Milan",
       "side": "home",
       "season": "23/24",
-      "price": 60
+      "price": 60,
+      "tag": "kit"
+    },
+    {
+      "product_id": "100",
+      "brand": "Adidas",
+      "label": "F50 Pro FG",
+      "price": 200,
+      "tag": "boots"
     }
 ]
