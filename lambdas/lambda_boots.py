@@ -19,11 +19,13 @@ def lambda_handler(event, context):
             price = boot['price']
             bootLabel = f"{brand} {label}"
             photoID = f"{product_id}.png"
+            productDescription = boot['description']
             products.append({
                 'productLabel': bootLabel,
                 'price': price,
                 'photoID': photoID,
-                'product_id': product_id
+                'product_id': product_id,
+                'productDescription': productDescription
             })
             
             
@@ -38,7 +40,7 @@ def lambda_handler(event, context):
     
     except Exception as e:
         return {
-            'statusCode': 200,
+            'statusCode': 500,
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Content-Type',

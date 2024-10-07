@@ -1,105 +1,118 @@
 [
-    {
-      "product_id": "1",
-      "team_name": "FC Barcelona",
-      "side": "home",
-      "season": "24/25",
-      "price": 100,
-      "tag": "kit"
-    },
-    {
-      "product_id": "2",
-      "team_name": "Real Madrid",
-      "side": "home",
-      "season": "24/25",
-      "price": 100,
-      "tag": "kit"
-    },
-    {
-      "product_id": "3",
-      "team_name": "Arsenal",
-      "side": "home",
-      "season": "24/25",
-      "price": 110,
-      "tag": "kit"
-    },
-    {
-      "product_id": "4",
-      "team_name": "PSV",
-      "side": "home",
-      "season": "23/24",
-      "price": 70,
-      "tag": "kit"
-    },
-    {
-      "product_id": "5",
-      "team_name": "Borussia Dortmund",
-      "side": "home",
-      "season": "24/25",
-      "price": 90,
-      "tag": "kit"
-    },
-    {
-      "product_id": "6",
-      "team_name": "Borussia Dortmund",
-      "side": "away",
-      "season": "24/25",
-      "price": 90,
-      "tag": "kit"
-    },
-    {
-      "product_id": "7",
-      "team_name": "Bayern Munchen",
-      "side": "home",
-      "season": "24/25",
-      "price": 90,
-      "tag": "kit"
-    },
-    {
-      "product_id": "8",
-      "team_name": "PSG",
-      "side": "home",
-      "season": "13/14",
-      "price": 160,
-      "tag": "kit"
-    },
-    {
-      "product_id": "9",
-      "team_name": "Benfica",
-      "side": "third",
-      "season": "24/15",
-      "price": 90,
-      "tag": "kit"
-    },
-    {
-      "product_id": "10",
-      "team_name": "Juventus",
-      "side": "home",
-      "season": "22/23",
-      "price": 50,
-      "tag": "kit"
-    },
-    {
-      "product_id": "11",
-      "team_name": "AS Roma",
-      "side": "home",
-      "season": "23/24",
-      "price": 60,
-      "tag": "kit"
-    },
-    {
-      "product_id": "12",
-      "team_name": "AC Milan",
-      "side": "home",
-      "season": "23/24",
-      "price": 60,
-      "tag": "kit"
-    },
-    {
-      "product_id": "100",
-      "brand": "Adidas",
-      "label": "F50 Pro FG",
-      "price": 200,
-      "tag": "boots"
-    }
+  {
+    "product_id": "1",
+    "team_name": "FC Barcelona",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kit",
+    "description": "Show your support for FC Barcelona with the official 24/25 home kit. A must-have for any true Barça fan."
+  },
+  {
+    "product_id": "2",
+    "team_name": "Real Madrid",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kit",
+    "description": "Wear the iconic Real Madrid 24/25 home kit and join the legacy of champions."
+  },
+  {
+    "product_id": "3",
+    "team_name": "Arsenal",
+    "side": "home",
+    "season": "24/25",
+    "price": 110,
+    "tag": "kit",
+    "description": "Represent the Gunners in style with Arsenal's 24/25 home kit, designed for the ultimate fan experience."
+  },
+  {
+    "product_id": "4",
+    "team_name": "PSV",
+    "side": "home",
+    "season": "23/24",
+    "price": 70,
+    "tag": "kit",
+    "description": "Get the PSV 23/24 home kit and celebrate the pride of Eindhoven at an unbeatable price."
+  },
+  {
+    "product_id": "5",
+    "team_name": "Borussia Dortmund",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kit",
+    "description": "Cheer for Borussia Dortmund with their bold 24/25 home kit. A perfect addition to any fan's collection."
+  },
+  {
+    "product_id": "6",
+    "team_name": "Borussia Dortmund",
+    "side": "away",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kit",
+    "description": "Support Borussia Dortmund on the road with the sleek 24/25 away kit. Stand out with this stylish design."
+  },
+  {
+    "product_id": "7",
+    "team_name": "Bayern Munchen",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kit",
+    "description": "Wear the iconic red with the Bayern Munich 24/25 home kit, crafted for champions."
+  },
+  {
+    "product_id": "8",
+    "team_name": "PSG",
+    "side": "home",
+    "season": "13/14",
+    "price": 160,
+    "tag": "kit",
+    "description": "Own a piece of history with the PSG 13/14 home kit, a rare and exclusive throwback."
+  },
+  {
+    "product_id": "9",
+    "team_name": "Benfica",
+    "side": "third",
+    "season": "24/15",
+    "price": 90,
+    "tag": "kit",
+    "description": "Show your love for Benfica with their unique third kit for the 24/15 season. A stylish choice for any fan."
+  },
+  {
+    "product_id": "10",
+    "team_name": "Juventus",
+    "side": "home",
+    "season": "22/23",
+    "price": 50,
+    "tag": "kit",
+    "description": "Grab the Juventus 22/23 home kit and support one of Italy's most storied clubs."
+  },
+  {
+    "product_id": "11",
+    "team_name": "AS Roma",
+    "side": "home",
+    "season": "23/24",
+    "price": 60,
+    "tag": "kit",
+    "description": "Wear the colors of Rome with pride in the AS Roma 23/24 home kit. Classic and timeless."
+  },
+  {
+    "product_id": "12",
+    "team_name": "AC Milan",
+    "side": "home",
+    "season": "23/24",
+    "price": 60,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "100",
+    "brand": "Adidas",
+    "label": "F50 Pro FG",
+    "price": 200,
+    "tag": "boots",
+    "description": "Elevate your game with the Adidas F50 Pro FG boots, designed for speed and precision on the pitch."
+  }
 ]

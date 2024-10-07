@@ -38,7 +38,7 @@ def lambda_handler(event, context):
     
     except Exception as e:
         return {
-            'statusCode': 200,
+            'statusCode': 500,
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Content-Type',

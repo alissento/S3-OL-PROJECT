@@ -22,3 +22,15 @@ resource "aws_dynamodb_table" "fb4u_products" {
     projection_type    = "ALL"
   }
 }
+
+resource "aws_dynamodb_table" "fb4u_ads" {
+  name           = "fb4u_ads"
+  read_capacity  = 5
+  write_capacity = 5
+  hash_key       = "ad_id"
+
+  attribute {
+    name = "ad_id"
+    type = "S"
+  }
+}

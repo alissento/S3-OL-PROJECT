@@ -1,10 +1,9 @@
 import json, boto3
 
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('fb4u_products')
 
-def load_data(json_file):
-
+def load_data(json_file, tableName):
+    table = dynamodb.Table(tableName)
     with open(json_file) as file:
         items = json.load(file)
 
@@ -13,4 +12,5 @@ def load_data(json_file):
         table.put_item(Item=item)
 
     
-load_data('data.json')
+load_data('data.json', 'fb4u_products')
+load_data('ads.json', 'fb4u_ads')

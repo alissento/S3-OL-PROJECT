@@ -1,4 +1,5 @@
-import simplejson, boto3
+import simplejson as json
+import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
 def lambda_handler(event, context):
@@ -8,7 +9,7 @@ def lambda_handler(event, context):
     try:
         response = table.query(IndexName='fb4u_tag',KeyConditionExpression=Key('tag').eq('kit'))
         data = response["Items"]
-        kits = simplejson.loads(simplejson.dumps(data))
+        kits = json.loads(json.dumps(data))
         
         products = []
         
@@ -20,11 +21,13 @@ def lambda_handler(event, context):
             teamLabel = f"{team_name} {side} {season}"
             price = kit['price']
             photoID = f"{product_id}.png"
+            productDescription = kit['description']
             products.append({
                 'productLabel': teamLabel,
                 'price': price,
                 'photoID': photoID,
-                'product_id': product_id
+                'product_id': product_id,
+                'productDescription': productDescription
             })
             
             
@@ -34,16 +37,16 @@ def lambda_handler(event, context):
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
-            'body': simplejson.dumps(products)
+            'body': json.dumps(products)
         }
     
     except Exception as e:
         return {
-            'statusCode': 200,
+            'statusCode': 500,
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': 'Content-Type',
             },
-            'body': simplejson.dumps({'error': str(e)})
+            'body': json.dumps({'error': str(e)})
         }
  
