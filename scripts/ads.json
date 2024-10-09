@@ -1,9 +1,26 @@
 [
     {
-        "ad_id": "101",
-        "title": "FC Barcelona Home Kit 24/25",
-        "image_url": "https://example.com/images/fc_barcelona_home_kit_24_25.jpg",
-        "cta_text": "Buy Now",
-        "cta_url": "https://example.com/product/fc_barcelona_home_kit_24_25"
+        "ad_id": "1001",
+        "ad_label": "FC Barcelona Home Kit 24/25"
+    },
+    {
+        "ad_id": "1002",
+        "ad_label": "PSG Home Kit 12/13"
+    },
+    {
+        "ad_id": "1003",
+        "ad_label": "Bayern Munich Home Kit 24/25"
+    },
+    {
+        "ad_id": "1004",
+        "ad_label": "FC Barcelona Away Kit 24/25"
+    },
+    {
+        "ad_id": "1005",
+        "ad_label": "PSG Away Kit 12/13"
+    },
+    {
+        "ad_id": "1006",
+        "ad_label": "Bayern Munich Away Kit 24/25"
     }
 ]

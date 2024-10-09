@@ -6,10 +6,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script>loadAds();</script>
 </head>
-<body class="h-full flex flex-col font-karantina uppercase">
+<body class="h-full flex flex-col font-karantina uppercase min-h-screen">
     <header class="bg-black text-white flex justify-between items-center">
         <div id="logo" class="flex items-center">
             <img id="football_image" src="images/football_image.png" class="w-16 h-auto m-2.5" alt="football image">
@@ -35,7 +37,7 @@
         <img id="cart_icon" src="images/shopping_cart_icon.png" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200" alt="Cart">
       </div>
     </header>
-    <main id="main_content" role="main">       
+    <main id="main_content" role="main" class="flex-grow">       
     </main>
     <footer class="bg-black text-white flex justify-between items-center p-5 text-4xl">
         <div class="flex-1 text-left ml-10 tracking-wider">

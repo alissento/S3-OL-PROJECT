@@ -11,12 +11,20 @@ def lambda_handler(event, context):
     items = response['Items']
     
     selected_items = random.sample(items, 3)
-    selected_ids = [item['ad_id'] for item in selected_items]
+    
+    ads = []
+    for item in selected_items:
+        ad_id = item['ad_id']
+        ad_label = item['ad_label']
+        ad_photo = f'{ad_id}.png'
+
+        ads.append({
+            'ad_id': ad_id,
+            'ad_label': ad_label,
+            'ad_photo': ad_photo
+        })
 
     return {
         'statusCode': 200,
-        'body': json.dumps({
-            'selected_ids': selected_ids,
-            'selected_items': selected_items
-        })
+        'body': json.dumps(ads)
     }

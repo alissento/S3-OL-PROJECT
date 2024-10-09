@@ -48,11 +48,11 @@ async function loadStuff(api_route) {
 async function loadProductPage(product) {
 
     const mainContent = document.getElementById('main_content');
-    mainContent.className = 'flex';
+    mainContent.className = 'flex flex-grow';
     mainContent.innerHTML = '';
 
     const productPhoto = document.createElement('div');
-    productPhoto.className = 'flex flex-col w-[50%] items-left text-left m-11 ml-32';
+    productPhoto.className = 'flex flex-col w-[50%] items-left text-left m-11 ml-[10%]';
 
     const img = document.createElement('img');
     img.src = `images/$${product.photoID}`;
@@ -64,7 +64,7 @@ async function loadProductPage(product) {
     mainContent.appendChild(productPhoto);    
 
     const productDesc = document.createElement('div');
-    productDesc.className = 'flex flex-col w-[50%] items-center text-center m-11 mr-32';
+    productDesc.className = 'flex flex-col w-[50%] items-center text-center m-11 mr-[10%]';
 
     const label = document.createElement('p');
     label.className = 'text-6xl font-bold text-center';
@@ -83,17 +83,34 @@ async function loadProductPage(product) {
 
     productDesc.appendChild(desc);
 
-    const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
-    const sizeContainer = document.createElement('div');
-    sizeContainer.className = 'flex space-x-4 mt-16';
+    console.log(product.productTag);
 
-    sizes.forEach(size => {
+    let sizes = [];
+    if(product.productTag == 'kit') {
+        sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+    }
+    else if(product.productTag == 'boots') {
+        sizes = [];
+        for (let size = 36; size <= 46; size += 0.5) {
+            sizes.push(size.toString());
+        }
+    }
+
+    const sizeContainer = document.createElement('div');
+    sizeContainer.className = 'flex flex-wrap justify-center mt-12';
+
+    let selectedSize = null;
+
+    sizes.forEach((size) => {
         const sizeButton = document.createElement('button');
-        sizeButton.className = 'px-8 py-3 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer';
+        sizeButton.className = 'w-16 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-2 ml-1 mr-1';
         sizeButton.textContent = size;
         sizeButton.onclick = () => {
-            // TODO logic for selecting size
-            sizeButton.className = 'px-8 py-3 text-2xl border-2 border-black rounded-lg cursor-pointer';
+            sizeContainer.querySelectorAll('button').forEach(btn => {
+                btn.className = 'w-16 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-2 ml-1 mr-1';
+            });
+            sizeButton.className = 'w-16 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-2 ml-1 mr-1';
+            selectedSize = size;
         };
         sizeContainer.appendChild(sizeButton);
     });
@@ -104,10 +121,54 @@ async function loadProductPage(product) {
     addToCartButton.className = 'mt-8 px-40 py-5 text-5xl bg-blue-700 text-white rounded-lg';
     addToCartButton.textContent = 'ADD TO CART';
     addToCartButton.onclick = () => {
-        // TODO logic
+        window.alert(`$${product.product_id} - $${selectedSize}`);
     };
 
     productDesc.appendChild(addToCartButton);
 
     mainContent.appendChild(productDesc);
+}
+
+async function loadAds() {
+    const apiURLTerraform = '${api_url}'
+    const apiUrl = apiURLTerraform+'/';
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: 
+            {
+                'Accept': 'application/json'
+            }
+        });
+    
+    const ads = await response.json();
+
+    const mainContent = document.getElementById('main_content');
+    mainContent.className = 'flex flex-grow';
+    mainContent.innerHTML = '';
+
+    // TODO fix the ads in home page
+    
+    ads.forEach(ad => {
+        const adDiv = document.createElement('div');
+        adDiv.className = 'flex flex-col items-center text-center m-5';
+
+        const img = document.createElement('img');
+        img.src = `images/$${ad.ad_photo}`;
+        img.alt = ad.ad_label;
+        img.className = 'h-72 w-60 mb-2.5 rounded-[10%] border-2 border-black cursor-pointer';
+
+        adDiv.appendChild(img);
+
+        const label = document.createElement('p');
+        label.className = 'text-2xl font-bold text-center';
+        label.textContent = ad.ad_label;
+        adDiv.appendChild(label);
+
+        mainContent.appendChild(adDiv);
+    });
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('ads').textContent = 'Error with fetching.';
+    }
 }

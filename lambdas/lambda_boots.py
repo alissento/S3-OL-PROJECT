@@ -20,12 +20,14 @@ def lambda_handler(event, context):
             bootLabel = f"{brand} {label}"
             photoID = f"{product_id}.png"
             productDescription = boot['description']
+            productTag = boot['tag']
             products.append({
                 'productLabel': bootLabel,
                 'price': price,
                 'photoID': photoID,
                 'product_id': product_id,
-                'productDescription': productDescription
+                'productDescription': productDescription,
+                'productTag': productTag
             })
             
             
