@@ -56,6 +56,7 @@ resource "aws_lambda_function" "list_kits" {
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"
   handler       = "lambda_kits.lambda_handler"
+  timeout       = 15
 }
 
 resource "aws_lambda_function" "list_boots" {
@@ -64,6 +65,7 @@ resource "aws_lambda_function" "list_boots" {
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"
   handler       = "lambda_boots.lambda_handler"
+  timeout       = 15
 }
 
 resource "aws_lambda_function" "list_accessories" {
@@ -72,6 +74,7 @@ resource "aws_lambda_function" "list_accessories" {
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"
   handler       = "lambda_accessories.lambda_handler"
+  timeout       = 15
 }
 
 resource "aws_lambda_function" "list_home_page" {
@@ -80,4 +83,5 @@ resource "aws_lambda_function" "list_home_page" {
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"
   handler       = "lambda_home_page.lambda_handler"
+  timeout       = 15
 }
