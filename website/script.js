@@ -29,7 +29,7 @@ async function loadStuff(api_route) {
         productDiv.appendChild(img);
 
         const label = document.createElement('p');
-        label.className = 'text-2xl font-bold text-center';
+        label.className = 'text-[22px] font-bold text-center';
         label.textContent = product.productLabel;
         productDiv.appendChild(label);
 
@@ -52,19 +52,19 @@ async function loadProductPage(product) {
     mainContent.innerHTML = '';
 
     const productPhoto = document.createElement('div');
-    productPhoto.className = 'flex flex-col w-[50%] items-left text-left m-11 ml-[10%]';
+    productPhoto.className = 'flex flex-col w-[50%] items-left text-left m-11 ml-[12%]';
 
     const img = document.createElement('img');
     img.src = `images/$${product.photoID}`;
     img.alt = product.productLabel;
-    img.className = 'h-[623px] w-[529px] rounded-[10%] border-[3px] border-black';
+    img.className = 'h-[95%] w-[85%] rounded-[10%] border-[3px] border-black';
 
     productPhoto.appendChild(img);
 
     mainContent.appendChild(productPhoto);    
 
     const productDesc = document.createElement('div');
-    productDesc.className = 'flex flex-col w-[50%] items-center text-center m-11 mr-[10%]';
+    productDesc.className = 'flex flex-col w-[50%] items-center text-center m-11 mr-[12%]';
 
     const label = document.createElement('p');
     label.className = 'text-6xl font-bold text-center';
@@ -132,6 +132,8 @@ async function loadProductPage(product) {
 async function loadAds() {
     const apiURLTerraform = '${api_url}'
     const apiUrl = apiURLTerraform+'/';
+
+    window.history.pushState({}, '', '/');
     try {
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -144,24 +146,22 @@ async function loadAds() {
     const ads = await response.json();
 
     const mainContent = document.getElementById('main_content');
-    mainContent.className = 'flex flex-grow';
+    mainContent.className = 'flex justify-center items-center flex-wrap w-full';
     mainContent.innerHTML = '';
 
-    // TODO fix the ads in home page
-    
     ads.forEach(ad => {
         const adDiv = document.createElement('div');
-        adDiv.className = 'flex flex-col items-center text-center m-5';
+        adDiv.className = 'flex flex-col items-center text-center m-10';
 
         const img = document.createElement('img');
         img.src = `images/$${ad.ad_photo}`;
         img.alt = ad.ad_label;
-        img.className = 'h-72 w-60 mb-2.5 rounded-[10%] border-2 border-black cursor-pointer';
+        img.className = 'h-[422px] w-[352px] mb-2.5 rounded-[10%] border-2 border-black cursor-pointer';
 
         adDiv.appendChild(img);
 
         const label = document.createElement('p');
-        label.className = 'text-2xl font-bold text-center';
+        label.className = 'text-[26px] font-bold text-center';
         label.textContent = ad.ad_label;
         adDiv.appendChild(label);
 

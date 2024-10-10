@@ -38,20 +38,20 @@
   {
     "product_id": "5",
     "team_name": "Borussia Dortmund",
-    "side": "home",
-    "season": "24/25",
-    "price": 90,
-    "tag": "kit",
-    "description": "Cheer for Borussia Dortmund with their bold 24/25 home kit. A perfect addition to any fan's collection."
-  },
-  {
-    "product_id": "6",
-    "team_name": "Borussia Dortmund",
     "side": "away",
     "season": "24/25",
     "price": 90,
     "tag": "kit",
     "description": "Support Borussia Dortmund on the road with the sleek 24/25 away kit. Stand out with this stylish design."
+  },
+  {
+    "product_id": "6",
+    "team_name": "Borussia Dortmund",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kit",
+    "description": "Cheer for Borussia Dortmund with their bold 24/25 home kit. A perfect addition to any fan's collection."
   },
   {
     "product_id": "7",
@@ -104,6 +104,78 @@
     "side": "home",
     "season": "23/24",
     "price": 60,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "13",
+    "team_name": "PSV",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "14",
+    "team_name": "FC Barcelona",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "15",
+    "team_name": "Inter Miami",
+    "side": "home",
+    "season": "24/25",
+    "price": 80,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "16",
+    "team_name": "Sevilla",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "17",
+    "team_name": "Real Betis",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "18",
+    "team_name": "Atalanta",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "19",
+    "team_name": "Ajax",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kit",
+    "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
+  },
+  {
+    "product_id": "20",
+    "team_name": "PSV",
+    "side": "third",
+    "season": "24/25",
+    "price": 90,
     "tag": "kit",
     "description": "Show your passion for AC Milan with their official 23/24 home kit. A perfect addition for fans of the Rossoneri."
   },
