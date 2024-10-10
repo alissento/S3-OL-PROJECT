@@ -24,7 +24,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "dynamodb:Query"
         ],
         "Effect" : "Allow",
-        "Resource" : [ aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn ]
+        "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn]
       },
       {
         "Action" : [
