@@ -2,18 +2,18 @@ import simplejson as json
 import boto3
 import random
 
-def lambda_handler(event, context):
+def lambda_handler(event, context): # Lambda handler function, called when the Lambda is triggered by an event
 
-    dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('fb4u_ads')
+    dynamodb = boto3.resource('dynamodb') # Create a DynamoDB resource
+    table = dynamodb.Table('fb4u_ads') # Connect to the DynamoDB table
     
-    response = table.scan()
-    items = response['Items']
+    response = table.scan() # Scan the DynamoDB table for all items
+    items = response['Items'] # Get the items from the response
     
-    selected_items = random.sample(items, 3)
+    selected_items = random.sample(items, 3) # Select 3 random items from the items list
     
     ads = []
-    for item in selected_items:
+    for item in selected_items: # Iterate through the selected items, get the most important data and append it to the ads list
         ad_id = item['ad_id']
         ad_label = item['ad_label']
         ad_photo = f'{ad_id}.png'
@@ -26,5 +26,5 @@ def lambda_handler(event, context):
 
     return {
         'statusCode': 200,
-        'body': json.dumps(ads)
+        'body': json.dumps(ads) # Return the ads list as JSON
     }
