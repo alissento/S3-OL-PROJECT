@@ -1,5 +1,4 @@
-# Assume role for Lambdas
-data "aws_iam_policy_document" "lambda_assume_role" {
+data "aws_iam_policy_document" "lambda_assume_role" { // Create a policy document for the Lambda function
   statement {
     effect = "Allow"
 
@@ -12,13 +11,13 @@ data "aws_iam_policy_document" "lambda_assume_role" {
   }
 }
 
-resource "aws_iam_policy" "lambda_policy" {
+resource "aws_iam_policy" "lambda_policy" { // Create a policy for the Lambda function
   name = "lambda_policy"
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
       {
-        "Action" : [
+        "Action" : [ // Allow the Lambda function to access the DynamoDB tables
           "dynamodb:Scan",
           "dynamodb:GetItem",
           "dynamodb:Query"
@@ -27,7 +26,7 @@ resource "aws_iam_policy" "lambda_policy" {
         "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn]
       },
       {
-        "Action" : [
+        "Action" : [ // Allow the Lambda function to write logs
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
@@ -39,49 +38,48 @@ resource "aws_iam_policy" "lambda_policy" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" { // Attach the policy to the role
   role       = aws_iam_role.iam_for_lambda.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-resource "aws_iam_role" "iam_for_lambda" {
+resource "aws_iam_role" "iam_for_lambda" { // Create a role for the Lambda function
   name               = "role_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 }
 
-# Test lambda function
-resource "aws_lambda_function" "list_kits" {
+resource "aws_lambda_function" "list_kits" { // Create a Lambda function for the kits listing
   function_name = "list_kits"
-  filename      = "../lambdas/lambda_kits.zip"
+  filename      = "../lambdas/lambda_kits.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12"
-  handler       = "lambda_kits.lambda_handler"
-  timeout       = 15
+  runtime       = "python3.12" // Set the runtime to Python 3.12
+  handler       = "lambda_kits.lambda_handler" // Set the handler to lambda_handler
+  timeout       = 15 // Set the timeout to 15 seconds
 }
 
-resource "aws_lambda_function" "list_boots" {
+resource "aws_lambda_function" "list_boots" { // Create a Lambda function for the boots listing
   function_name = "list_boots"
-  filename      = "../lambdas/lambda_boots.zip"
+  filename      = "../lambdas/lambda_boots.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12"
-  handler       = "lambda_boots.lambda_handler"
-  timeout       = 15
+  runtime       = "python3.12" // Set the runtime to Python 3.12
+  handler       = "lambda_boots.lambda_handler" // Set the handler to lambda_handler
+  timeout       = 15 // Set the timeout to 15 seconds
 }
 
-resource "aws_lambda_function" "list_accessories" {
+resource "aws_lambda_function" "list_accessories" { // Create a Lambda function for the accessories listing
   function_name = "list_accessories"
-  filename      = "../lambdas/lambda_accessories.zip"
+  filename      = "../lambdas/lambda_accessories.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12"
-  handler       = "lambda_accessories.lambda_handler"
-  timeout       = 15
+  runtime       = "python3.12" // Set the runtime to Python 3.12
+  handler       = "lambda_accessories.lambda_handler" // Set the handler to lambda_handler
+  timeout       = 15 // Set the timeout to 15 seconds
 }
 
-resource "aws_lambda_function" "list_home_page" {
+resource "aws_lambda_function" "list_home_page" { // Create a Lambda function for the home page
   function_name = "list_home_page"
-  filename      = "../lambdas/lambda_home_page.zip"
+  filename      = "../lambdas/lambda_home_page.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12"
-  handler       = "lambda_home_page.lambda_handler"
-  timeout       = 15
+  runtime       = "python3.12" // Set the runtime to Python 3.12
+  handler       = "lambda_home_page.lambda_handler" // Set the handler to lambda_handler
+  timeout       = 15 // Set the timeout to 15 seconds
 }
