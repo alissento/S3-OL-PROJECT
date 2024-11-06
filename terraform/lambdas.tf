@@ -52,34 +52,34 @@ resource "aws_lambda_function" "list_kits" { // Create a Lambda function for the
   function_name = "list_kits"
   filename      = "../lambdas/lambda_kits.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12" // Set the runtime to Python 3.12
+  runtime       = "python3.12"                 // Set the runtime to Python 3.12
   handler       = "lambda_kits.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15 // Set the timeout to 15 seconds
+  timeout       = 15                           // Set the timeout to 15 seconds
 }
 
 resource "aws_lambda_function" "list_boots" { // Create a Lambda function for the boots listing
   function_name = "list_boots"
   filename      = "../lambdas/lambda_boots.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12" // Set the runtime to Python 3.12
+  runtime       = "python3.12"                  // Set the runtime to Python 3.12
   handler       = "lambda_boots.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15 // Set the timeout to 15 seconds
+  timeout       = 15                            // Set the timeout to 15 seconds
 }
 
 resource "aws_lambda_function" "list_accessories" { // Create a Lambda function for the accessories listing
   function_name = "list_accessories"
   filename      = "../lambdas/lambda_accessories.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12" // Set the runtime to Python 3.12
+  runtime       = "python3.12"                        // Set the runtime to Python 3.12
   handler       = "lambda_accessories.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15 // Set the timeout to 15 seconds
+  timeout       = 15                                  // Set the timeout to 15 seconds
 }
 
 resource "aws_lambda_function" "list_home_page" { // Create a Lambda function for the home page
   function_name = "list_home_page"
   filename      = "../lambdas/lambda_home_page.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = "python3.12" // Set the runtime to Python 3.12
+  runtime       = "python3.12"                      // Set the runtime to Python 3.12
   handler       = "lambda_home_page.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15 // Set the timeout to 15 seconds
+  timeout       = 15                                // Set the timeout to 15 seconds
 }

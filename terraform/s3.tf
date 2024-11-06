@@ -2,10 +2,15 @@ data "template_file" "script_js" {
   template = file("../website/script.js") // Replace API URL inside the script.js file
   vars = {
     api_url = aws_apigatewayv2_api.api_gw_http_fb4u.api_endpoint
+    aws_region = var.target_region
+    user_pool_id = aws_cognito_user_pool.fb4u_user_pool.id
+    app_client_id = aws_cognito_user_pool_client.app_client.id
   }
+
+  depends_on = [aws_apigatewayv2_api.api_gw_http_fb4u]
 }
 resource "aws_s3_bucket" "s3b" { // Defining the S3 bucket
-  bucket        = "fbforyou.com"
+  bucket        = "nknez.tech"   // My own personal domain for testing
   force_destroy = true
 }
 
@@ -16,7 +21,7 @@ resource "aws_s3_bucket_cors_configuration" "s3_cors" { // Defining the CORS con
     allowed_origins = ["*"]
   }
 }
- 
+
 resource "aws_s3_bucket_public_access_block" "s3b_enable_public_access" { // Disabling public access block
   bucket = aws_s3_bucket.s3b.id
 
@@ -85,7 +90,7 @@ resource "aws_s3_object" "photos_upload" { // Adding images to the S3 bucket
   source   = "../website/images/${each.value}"
 
   depends_on = [data.template_file.script_js]
-} 
+}
 output "website_url" { // Output of the URL of the website
   value = "http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"
 }

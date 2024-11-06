@@ -4,7 +4,7 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   protocol_type = "HTTP" // The protocol used by the API Gateway
 
   cors_configuration {
-    allow_origins = ["http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"] // Allow the origin of the request
+    allow_origins = ["http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}", "http://nknez.tech", "https://nknez.tech"] // Allow the origin of the request
     allow_methods = ["GET", "OPTIONS"]
     allow_headers = ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
   }

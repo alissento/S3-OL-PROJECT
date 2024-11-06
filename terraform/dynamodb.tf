@@ -1,7 +1,7 @@
 resource "aws_dynamodb_table" "fb4u_products" { // Create a DynamoDB table for the products
   name         = "fb4u_products"
   billing_mode = "PAY_PER_REQUEST" // Set the billing mode to pay per request
-  hash_key     = "product_id" // Set the hash key (primary key) to product_id
+  hash_key     = "product_id"      // Set the hash key (primary key) to product_id
 
   attribute {
     name = "product_id"
@@ -23,7 +23,7 @@ resource "aws_dynamodb_table" "fb4u_products" { // Create a DynamoDB table for t
 resource "aws_dynamodb_table" "fb4u_ads" { // Create a DynamoDB table for the ads
   name         = "fb4u_ads"
   billing_mode = "PAY_PER_REQUEST" // Set the billing mode to pay per request
-  hash_key     = "ad_id" // Set the hash key (primary key) to ad_id
+  hash_key     = "ad_id"           // Set the hash key (primary key) to ad_id
 
   attribute {
     name = "ad_id"
