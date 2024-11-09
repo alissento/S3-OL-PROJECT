@@ -1,76 +1,180 @@
-// TODO make this shit work somehow, maybe move to js sdk instead of amplify or learn some finally some js framework
-import Amplify, { Auth } from 'aws-amplify';
+const firebaseConfig = {
+    apiKey: "AIzaSyCDVLpCzDVNuDgjaQ3GMbjcwYtSZprxNdI",
+    authDomain: "fb4u-2e88b.firebaseapp.com",
+    projectId: "fb4u-2e88b",
+    storageBucket: "fb4u-2e88b.firebasestorage.app",
+    messagingSenderId: "969831689978",
+    appId: "1:969831689978:web:1d68182bc558765be86343"
+};
 
-Amplify.configure({
-  Auth: {
-    region: '${aws_region}',
-    userPoolId: '${user_pool_id}',
-    userPoolWebClientId: '${app_client_id}',
-  },
-});
+const app = firebase.initializeApp(firebaseConfig);
 
-async function handleRegister(event) {
-    event.preventDefault();
-    const firstName = document.querySelector('input[placeholder="First name"]').value;
-    const lastName = document.querySelector('input[placeholder="Last name"]').value;
-    const email = document.querySelector('input[placeholder="Email"]').value;
-    const address = document.querySelector('input[placeholder="Address"]').value;
-    const phone = document.querySelector('input[placeholder="Phone number"]').value;
-    const password = document.querySelector('input[placeholder="Password"]').value;
-    const repeatPassword = document.querySelector('input[placeholder="Repeat password"]').value;
-
-    if (password !== repeatPassword) {
-        window.alert('Passwords do not match!');
-        return;
-    }
-
+async function signIn(email, password) {
     try {
-        const { user } = await Auth.signUp({
-            username: email,
-            password: password,
-            attributes: {
-                email: email,
-                given_name: firstName,
-                family_name: lastName,
-                address: address,
-                phone_number: phone
+        const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+        alert('Logged in successfully');
+        getUserData(user.user.uid);
+    } catch (error) {
+        if (error.code === 'auth/invalid-login-credentials') {
+            alert('Invalid email or password');
+        }
+        else {
+            console.error('Error:', error);
+        }
+    }
+}
+
+
+async function registerIn(firstName, lastName, email, streetName, city, postalCode, country, phone, password) {
+    try {
+        const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const user = newUser.user;
+        storeUserDetails(user.uid, firstName, lastName, email, streetName, city, postalCode, country, phone);
+        alert('Registered successfully');
+        loadLoginPage();
+    } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+            alert('Email is already in use');
+        }
+        else {
+            console.error('Error:', error);
+        }
+    }
+    
+}
+
+async function storeUserDetails(uid, firstName, lastName, email, streetName, city, postalCode, country, phone) {
+    const requestData = {
+        user_id: uid,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        streetName: streetName,
+        city: city,
+        postalCode: postalCode,
+        country: country,
+        phoneNumber: phone
+    };
+
+    const apiURLTerraform = '${api_url}';
+    const apiUrl = apiURLTerraform+'/storeUserData';
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add an authorization token if needed
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to store user details');
+        }
+
+        console.log('User details stored successfully');
+    } catch (error) {
+        console.error('Error storing user details:', error);
+    }
+}
+
+async function getUserData(userId) {
+    const apiURLTerraform = '${api_url}';
+    const apiUrl = apiURLTerraform+'/getUserData';
+    try {
+        const response = await fetch(`$${apiUrl}?user_id=$${userId}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
             }
         });
-        console.log('User registered:', user);
-        window.alert('Registration successful!');
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch user details');
+        }
+
+        const userData = await response.json();
+        console.log(userData);
+        displayUserPage(userData);
+
     } catch (error) {
-        console.error('Error registering:', error);
-        window.alert('Error registering: ' + error.message);
+        console.error('Error fetching user details:', error);
     }
 }
 
-async function handleLogin(event) {
-    event.preventDefault();
-    const email = document.querySelector('input[placeholder="Email"]').value;
-    const password = document.querySelector('input[placeholder="Password"]').value;
+async function displayUserPage(userData) {
 
+    email = userData.email;
+    firstName = userData.first_name;
+    lastName = userData.last_name;
+    streetName = userData.street_name;
+    city = userData.city;
+    postalCode = userData.postal_code;
+    country = userData.country;
+    phoneNumber = userData.phone_number;
+
+    const mainContent = document.getElementById('main_content');
+    mainContent.innerHTML = '';
+    mainContent.className = 'flex flex-col items-center text-center m-11';
+
+    const userLabel = document.createElement('h1');
+    userLabel.className = 'text-5xl font-bold text-center mb-8';
+    userLabel.textContent = firstName + ' ' + lastName;
+    mainContent.appendChild(userLabel);
+
+    const emailLabel = document.createElement('p');
+    emailLabel.className = 'text-3xl text-center';
+    emailLabel.textContent = email;
+    mainContent.appendChild(emailLabel);
+
+    const addressLabel = document.createElement('p');
+    addressLabel.className = 'text-3xl text-center';
+    addressLabel.textContent = streetName + ', ' + city + ', ' + postalCode + ', ' + country;
+    mainContent.appendChild(addressLabel);
+
+    const phoneLabel = document.createElement('p');
+    phoneLabel.className = 'text-3xl text-center';
+    phoneLabel.textContent = phoneNumber;
+    mainContent.appendChild(phoneLabel);
+    
+    const ordersButton = document.createElement('button');
+    ordersButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
+    ordersButton.textContent = 'My orders';
+    ordersButton.onclick = () => {
+        alert('My orders page is under construction');
+    };
+    mainContent.appendChild(ordersButton);
+
+    const changeDetailsButton = document.createElement('button');
+    changeDetailsButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
+    changeDetailsButton.textContent = 'Change details';
+    changeDetailsButton.onclick = () => {
+        alert('Change details page is under construction');
+    };
+    mainContent.appendChild(changeDetailsButton);
+    
+    const signOutButton = document.createElement('button');
+    signOutButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
+    signOutButton.textContent = 'Sign Out';
+    signOutButton.onclick = () => {
+        signOut();
+    };
+    mainContent.appendChild(signOutButton);
+}
+
+async function signOut() {
     try {
-        const user = await Auth.signIn(email, password);
-        console.log('Logged in:', user);
-        window.alert('Login successful!');
+        await firebase.auth().signOut();
+        alert('Signed out successfully');
+        loadLoginPage();
     } catch (error) {
-        console.error('Error logging in:', error);
-        window.alert('Error logging in: ' + error.message);
+        console.error('Error:', error);
     }
 }
-
-document.querySelector('form').addEventListener('submit', (event) => {
-    if (event.target.querySelector('button').textContent === 'Register') {
-        handleRegister(event);
-    } else if (event.target.querySelector('button').textContent === 'Login') {
-        handleLogin(event);
-    }
-});
-
 // Function to load the products from the API on the website
 async function loadStuff(api_route) {
     window.history.pushState({}, '', api_route);
-    const apiURLTerraform = '${api_url}'
+    const apiURLTerraform = '${api_url}';
     const apiUrl = apiURLTerraform+api_route; // apiURL based on Terraform output and the API route
     try {
         const response = await fetch(apiUrl, {
@@ -241,6 +345,19 @@ async function loadAds() {
     }
 }
 
+async function checkLogin() {
+    // Explicitly check if the user is logged in
+    const user = firebase.auth().currentUser;
+    console.log(user);
+    if (user) {
+        // User is logged in, proceed with user page
+        getUserData(user.uid);
+    } else {
+        // User is not logged in, redirect to login page
+        loadLoginPage();
+    }
+}
+
 async function loadLoginPage() {
     const mainContent = document.getElementById('main_content');
     mainContent.innerHTML = '';
@@ -253,21 +370,39 @@ async function loadLoginPage() {
 
     const loginForm = document.createElement('form');
     loginForm.className = 'flex flex-col items-center text-center m-8';
+
     const emailInput = document.createElement('input');
+    emailInput.type = 'email';
     emailInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
     emailInput.placeholder = 'Email';
     loginForm.appendChild(emailInput);
 
     const passwordInput = document.createElement('input');
+    passwordInput.type = 'password';
     passwordInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
     passwordInput.placeholder = 'Password';
     loginForm.appendChild(passwordInput);
 
     const loginButton = document.createElement('button');
+    loginButton.type = 'button';
     loginButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
     loginButton.textContent = 'Login';
     loginButton.onclick = () => {
-        window.alert('Login splaceholder');
+        const email = emailInput.value;
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+            alert('Please fill in both email and password.');
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        signIn(email, password);
     };
     loginForm.appendChild(loginButton);
 
@@ -306,35 +441,82 @@ async function loadRegisterPage() {
     registerForm.appendChild(lastNameInput);
 
     const emailInput = document.createElement('input');
+    emailInput.type = 'email';
     emailInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
     emailInput.placeholder = 'Email';
     registerForm.appendChild(emailInput);
 
-    const addressInput = document.createElement('input');
-    addressInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
-    addressInput.placeholder = 'Address';
-    registerForm.appendChild(addressInput);
+    const streetNameInput = document.createElement('input');
+    streetNameInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
+    streetNameInput.placeholder = 'Street name';
+    registerForm.appendChild(streetNameInput);
+
+    const cityInput = document.createElement('input');
+    cityInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
+    cityInput.placeholder = 'City';
+    registerForm.appendChild(cityInput);
+
+    const postalCodeInput = document.createElement('input');
+    postalCodeInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
+    postalCodeInput.placeholder = 'Postal code';
+    registerForm.appendChild(postalCodeInput);
+
+    const countryInput = document.createElement('input');
+    countryInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
+    countryInput.placeholder = 'Country';
+    registerForm.appendChild(countryInput);
 
     const phoneInput = document.createElement('input');
+    phoneInput.type = 'tel';
     phoneInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
     phoneInput.placeholder = 'Phone number';
     registerForm.appendChild(phoneInput);
 
     const passwordInput = document.createElement('input');
+    passwordInput.type = 'password';
     passwordInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
     passwordInput.placeholder = 'Password';
     registerForm.appendChild(passwordInput);
     
     const repeatPasswordInput = document.createElement('input');
+    repeatPasswordInput.type = 'password';
     repeatPasswordInput.className = 'w-96 h-12 text-2xl border-2 border-gray-300 rounded-lg cursor-pointer mt-3 text-center';
     repeatPasswordInput.placeholder = 'Repeat password';
     registerForm.appendChild(repeatPasswordInput);
 
     const registerButton = document.createElement('button');
+    registerButton.type = 'button';
     registerButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
     registerButton.textContent = 'Register';
     registerButton.onclick = () => {
-        window.alert('Registration placeholder');
+        const firstName = firstNameInput.value;
+        const lastName = lastNameInput.value;
+        const email = emailInput.value;
+        const streetName = streetNameInput.value;
+        const city = cityInput.value;
+        const postalCode = postalCodeInput.value;
+        const country = countryInput.value;
+        const phone = phoneInput.value;
+        const password = passwordInput.value;
+        const repeatPassword = repeatPasswordInput.value;
+
+        if (!firstName || !lastName || !email || !streetName || !postalCode || !city || !country || !phone || !password || !repeatPassword) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        if (password !== repeatPassword) {
+            alert('Passwords do not match.');
+            return;
+        }
+
+        registerIn(firstName, lastName, email, streetName, city, postalCode, country, phone, password);
     };
     registerForm.appendChild(registerButton); 
 

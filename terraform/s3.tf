@@ -2,9 +2,6 @@ data "template_file" "script_js" {
   template = file("../website/script.js") // Replace API URL inside the script.js file
   vars = {
     api_url = aws_apigatewayv2_api.api_gw_http_fb4u.api_endpoint
-    aws_region = var.target_region
-    user_pool_id = aws_cognito_user_pool.fb4u_user_pool.id
-    app_client_id = aws_cognito_user_pool_client.app_client.id
   }
 
   depends_on = [aws_apigatewayv2_api.api_gw_http_fb4u]

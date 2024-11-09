@@ -4,8 +4,8 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   protocol_type = "HTTP" // The protocol used by the API Gateway
 
   cors_configuration {
-    allow_origins = ["http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}", "http://nknez.tech", "https://nknez.tech"] // Allow the origin of the request
-    allow_methods = ["GET", "OPTIONS"]
+    allow_origins = ["*"] // Allow the origin of the request
+    allow_methods = ["GET", "OPTIONS", "POST"]
     allow_headers = ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
   }
 
@@ -35,7 +35,16 @@ resource "aws_apigatewayv2_integration" "home_ads_integration" { // Create an in
   integration_type = "AWS_PROXY"
   integration_uri  = aws_lambda_function.list_home_page.invoke_arn
 }
-
+resource "aws_apigatewayv2_integration" "store_user_data_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.store_user_data.invoke_arn
+}
+resource "aws_apigatewayv2_integration" "get_user_data_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.get_user_data.invoke_arn
+}
 resource "aws_apigatewayv2_route" "route_kits" { // Create a route for the kits listing
   api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
   route_key = "GET /kits"
@@ -58,6 +67,17 @@ resource "aws_apigatewayv2_route" "route_home" { // Create a route for the home 
   api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
   route_key = "GET /"
   target    = "integrations/${aws_apigatewayv2_integration.home_ads_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "storeUserData_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "POST /storeUserData"
+  target    = "integrations/${aws_apigatewayv2_integration.store_user_data_integration.id}"
+}
+resource "aws_apigatewayv2_route" "getUserData_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "GET /getUserData"
+  target    = "integrations/${aws_apigatewayv2_integration.get_user_data_integration.id}"
 }
 
 resource "aws_lambda_permission" "kits_api_gateway_permission" { // Create a permission for the kits listing
@@ -92,6 +112,20 @@ resource "aws_lambda_permission" "home_api_gateway_permission" { // Create a per
   source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }
 
+resource "aws_lambda_permission" "store_user_data_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.store_user_data.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+resource "aws_lambda_permission" "get_user_data_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.get_user_data.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
 resource "aws_apigatewayv2_stage" "default_stage" { // Create a stage for the API Gateway
   api_id      = aws_apigatewayv2_api.api_gw_http_fb4u.id
   name        = "$default"

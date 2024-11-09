@@ -20,10 +20,11 @@ resource "aws_iam_policy" "lambda_policy" { // Create a policy for the Lambda fu
         "Action" : [ // Allow the Lambda function to access the DynamoDB tables
           "dynamodb:Scan",
           "dynamodb:GetItem",
-          "dynamodb:Query"
+          "dynamodb:Query",
+          "dynamodb:PutItem"
         ],
         "Effect" : "Allow",
-        "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn]
+        "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn, aws_dynamodb_table.fb4u_users.arn]
       },
       {
         "Action" : [ // Allow the Lambda function to write logs
@@ -54,7 +55,7 @@ resource "aws_lambda_function" "list_kits" { // Create a Lambda function for the
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"                 // Set the runtime to Python 3.12
   handler       = "lambda_kits.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15                           // Set the timeout to 15 seconds
+  timeout       = 30                           // Set the timeout to 30 seconds
 }
 
 resource "aws_lambda_function" "list_boots" { // Create a Lambda function for the boots listing
@@ -63,7 +64,7 @@ resource "aws_lambda_function" "list_boots" { // Create a Lambda function for th
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"                  // Set the runtime to Python 3.12
   handler       = "lambda_boots.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15                            // Set the timeout to 15 seconds
+  timeout       = 30                             // Set the timeout to 30 seconds
 }
 
 resource "aws_lambda_function" "list_accessories" { // Create a Lambda function for the accessories listing
@@ -72,7 +73,7 @@ resource "aws_lambda_function" "list_accessories" { // Create a Lambda function 
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"                        // Set the runtime to Python 3.12
   handler       = "lambda_accessories.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15                                  // Set the timeout to 15 seconds
+  timeout       = 30                                   // Set the timeout to 30 seconds
 }
 
 resource "aws_lambda_function" "list_home_page" { // Create a Lambda function for the home page
@@ -81,5 +82,23 @@ resource "aws_lambda_function" "list_home_page" { // Create a Lambda function fo
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = "python3.12"                      // Set the runtime to Python 3.12
   handler       = "lambda_home_page.lambda_handler" // Set the handler to lambda_handler
-  timeout       = 15                                // Set the timeout to 15 seconds
+  timeout       = 30                                 // Set the timeout to 30 seconds
+}
+
+resource "aws_lambda_function" "store_user_data" { // Create a Lambda function for the home page
+  function_name = "store_user_data"
+  filename      = "../lambdas/lambda_store_user_data.zip" // Set the filename to the Lambda function zip file
+  role          = aws_iam_role.iam_for_lambda.arn
+  runtime       = "python3.12"                      // Set the runtime to Python 3.12
+  handler       = "lambda_store_user_data.lambda_handler" // Set the handler to lambda_handler
+  timeout       = 30                                 // Set the timeout to 30 seconds
+}
+
+resource "aws_lambda_function" "get_user_data" { // Create a Lambda function for the home page
+  function_name = "get_user_data"
+  filename      = "../lambdas/lambda_get_user_data.zip" // Set the filename to the Lambda function zip file
+  role          = aws_iam_role.iam_for_lambda.arn
+  runtime       = "python3.12"                      // Set the runtime to Python 3.12
+  handler       = "lambda_get_user_data.lambda_handler" // Set the handler to lambda_handler
+  timeout       = 30                                 // Set the timeout to 30 seconds
 }

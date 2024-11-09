@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         karantina: ['Karantina'],
+        roboto: ['Roboto'],
       },
     },
   },
