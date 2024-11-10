@@ -42,3 +42,14 @@ resource "aws_dynamodb_table" "fb4u_users" { // Create a DynamoDB table for the 
   }
   
 }
+
+resource "aws_dynamodb_table" "fb4u_cart" { // Create a DynamoDB table for the cart
+  name         = "fb4u_cart"
+  billing_mode = "PAY_PER_REQUEST" // Set the billing mode to pay per request
+  hash_key     = "user_id"         // Set the hash key (primary key) to user_id so that each user has a unique cart
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+  
+}

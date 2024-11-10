@@ -156,9 +156,8 @@ async function displayUserPage(userData) {
     const signOutButton = document.createElement('button');
     signOutButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
     signOutButton.textContent = 'Sign Out';
-    signOutButton.onclick = () => {
-        signOut();
-    };
+    signOutButton.onclick = () => signOut();
+    
     mainContent.appendChild(signOutButton);
 }
 
@@ -172,12 +171,12 @@ async function signOut() {
     }
 }
 // Function to load the products from the API on the website
-async function loadStuff(api_route) {
-    window.history.pushState({}, '', api_route);
+async function loadStuff(product_tag) {
+    // window.history.pushState({}, '', api_route);
     const apiURLTerraform = '${api_url}';
-    const apiUrl = apiURLTerraform+api_route; // apiURL based on Terraform output and the API route
+    const apiUrl = apiURLTerraform+'/loadProducts' // apiURL based on Terraform output and the API route
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(`$${apiUrl}?product_tag=$${product_tag}`, {
             method: 'GET', // GET request
             headers: 
             {
@@ -257,7 +256,7 @@ async function loadProductPage(product) {
     productDesc.appendChild(desc);
 
     let sizes = [];
-    if(product.productTag == 'kit') {
+    if(product.productTag == 'kits') {
         sizes = ['S', 'M', 'L', 'XL', 'XXL']; // Creating a sizes array for the kits
     }
     else if(product.productTag == 'boots') {
@@ -284,16 +283,14 @@ async function loadProductPage(product) {
             selectedSize = size;
         };
         sizeContainer.appendChild(sizeButton);
-    });
+    }); 
 
     productDesc.appendChild(sizeContainer);
 
     const addToCartButton = document.createElement('button');
     addToCartButton.className = 'mt-8 px-40 py-5 text-5xl bg-blue-700 text-white rounded-lg';
     addToCartButton.textContent = 'ADD TO CART'; // Creating an add to cart button
-    addToCartButton.onclick = () => {
-        window.alert(`$${product.product_id} - $${selectedSize}`); // Temporary alert for the product id and selected size
-    };
+    addToCartButton.onclick = () => addToCart(product.product_id, selectedSize); // Adding an onclick event to add the product to the cart
 
     productDesc.appendChild(addToCartButton);
 
@@ -409,9 +406,7 @@ async function loadLoginPage() {
     const registerLink = document.createElement('p');
     registerLink.className = 'text-4xl mt-16 cursor-pointer';
     registerLink.textContent = 'No account? Register here!';
-    registerLink.onclick = () => {
-        loadRegisterPage();
-    };
+    registerLink.onclick = () => loadRegisterPage();
     loginForm.appendChild(registerLink);
     
     mainContent.appendChild(loginForm);
@@ -523,11 +518,165 @@ async function loadRegisterPage() {
     const loginLink = document.createElement('p');
     loginLink.className = 'text-4xl mt-16 cursor-pointer';
     loginLink.textContent = 'Already have an account? Login here!';
-    loginLink.onclick = () => {
-        loadLoginPage();
-    };
+    loginLink.onclick = () => loadLoginPage();
     registerForm.appendChild(loginLink);
     
     mainContent.appendChild(registerForm);
 }
 
+async function addToCart(product_id, size) {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        alert('Please log in to add items to your cart.');
+        return;
+    }
+
+    const apiURLTerraform = '${api_url}';
+    const apiUrl = apiURLTerraform+'/addToCart';
+
+    const requestData = {
+        user_id: user.uid,
+        product_id: product_id,
+        size: size
+    };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add item to cart');
+        }
+
+        alert('Item added to cart successfully');
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+    }
+}
+
+async function loadCart() {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        alert('Please log in to view your cart.');
+        return;
+    }
+
+    const apiURLTerraform = '${api_url}';
+    const apiUrl = apiURLTerraform+'/loadCart';
+
+    try {
+        const response = await fetch(`$${apiUrl}?user_id=$${user.uid}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch cart items');
+        }
+
+        const cartItems = await response.json();
+
+        if (cartItems.length <= 0) {
+            alert('Your cart is empty');
+            return;
+        }
+        
+        displayCart(cartItems, user.uid);
+
+    } catch (error) {
+        console.error('Error fetching cart items:', error);
+    }
+}
+
+async function displayCart(cartItems, user_id) {
+    const mainContent = document.getElementById('main_content');
+    mainContent.innerHTML = '';
+    mainContent.className = 'flex flex-col items-center text-center m-11';
+
+    const cartLabel = document.createElement('h1');
+    cartLabel.className = 'text-5xl font-bold text-center mb-8';
+    cartLabel.textContent = 'Cart';
+    mainContent.appendChild(cartLabel);
+
+    const cartItemsContainer = document.createElement('div');
+    cartItemsContainer.className = 'flex flex-col items-center text-center w-96';
+    cartItems.forEach(cartItem => {
+        const cartItemDiv = document.createElement('div');
+        cartItemDiv.className = 'flex flex-row items-center justify-between w-full border-b-2 border-gray-300';
+
+        const productLabel = document.createElement('p');
+        productLabel.className = 'text-2xl';
+        productLabel.textContent = cartItem.productLabel;
+        cartItemDiv.appendChild(productLabel);
+
+        const sizeLabel = document.createElement('p');
+        sizeLabel.className = 'text-2xl';
+        sizeLabel.textContent = cartItem.size;
+        cartItemDiv.appendChild(sizeLabel);
+
+        const priceLabel = document.createElement('p');
+        priceLabel.className = 'text-2xl';
+        priceLabel.textContent = `$${cartItem.price}€`;
+        cartItemDiv.appendChild(priceLabel);
+
+        cartItemsContainer.appendChild(cartItemDiv);
+    });
+
+    mainContent.appendChild(cartItemsContainer);
+
+    const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+
+    const totalPriceLabel = document.createElement('p');
+    totalPriceLabel.className = 'text-3xl font-bold mt-8';
+    totalPriceLabel.textContent = `Total Price: $${totalPrice}€`;
+    mainContent.appendChild(totalPriceLabel);
+
+    const checkoutButton = document.createElement('button');
+    checkoutButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
+    checkoutButton.textContent = 'Checkout';
+    checkoutButton.onclick = () => alert('Checkout page is under construction');
+    mainContent.appendChild(checkoutButton);
+
+    const clearCartButton = document.createElement('button');
+    clearCartButton.className = 'w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3';
+    clearCartButton.textContent = 'Clear Cart';
+    clearCartButton.onclick = () => clearCart(user_id);
+
+    
+    mainContent.appendChild(clearCartButton);
+}
+
+async function clearCart(user_id) {
+    const apiURLTerraform = '${api_url}';
+    const apiUrl = apiURLTerraform+'/clearCart';
+
+    const requestData = {
+        user_id: user_id,
+    };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to clear cart');
+        }
+
+        alert('Cart cleared successfully');
+        loadAds();
+    } catch (error) {
+        console.error('Error clearing cart:', error);
+    }
+}

@@ -711,6 +711,10 @@ video {
   list-style-type: none;
 }
 
+.flex-row {
+  flex-direction: row;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -749,6 +753,10 @@ video {
 
 .border-\[3px\] {
   border-width: 3px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .border-black {
@@ -799,10 +807,6 @@ video {
 
 .font-karantina {
   font-family: Karantina;
-}
-
-.font-roboto {
-  font-family: Roboto;
 }
 
 .text-2xl {
