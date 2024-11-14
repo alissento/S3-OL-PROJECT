@@ -6,8 +6,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Karantina:wght@300;400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
     <script src="script.js"></script>
     <script>loadAds();</script>
 </head>
@@ -22,19 +25,19 @@
       <nav>
         <ul class="flex list-none justify-center">
             <li class="mx-15 text-4xl tracking-wider">
-                <a href="#" onclick="loadStuff('/kits')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10 tracking-wider">Kits</a>
+                <a href="#" onclick="loadStuff('kits')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10 tracking-wider">Kits</a>
             </li>
             <li class="mx-15 text-4xl tracking-wider">
-                <a href="#" onclick="loadStuff('/accessories')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10 tracking-wider">Accessories</a>
+                <a href="#" onclick="loadStuff('accessories')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10 tracking-wider">Accessories</a>
             </li>
             <li class="mx-15 text-4xl tracking-wider">
-                <a href="#" onclick="loadStuff('/boots')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10 tracking-wider">Boots</a>
+                <a href="#" onclick="loadStuff('boots')" class="text-white no-underline hover:brightness-50 transition-all duration-200 mx-10 tracking-wider">Boots</a>
             </li>
         </ul>
       </nav>
       <div class="flex items-center">
-        <img id="user_icon" src="images/user_icon.png" onclick="loadLoginPage()" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="User">
-        <img id="cart_icon" src="images/shopping_cart_icon.png" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200" alt="Cart">
+        <img id="user_icon" src="images/user_icon.png" onclick="checkLogin()" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="User">
+        <img id="cart_icon" src="images/shopping_cart_icon.png" onclick="loadCart() "class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="Cart">
       </div>
     </header>
     <main id="main_content" role="main" class="flex-grow">       

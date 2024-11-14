@@ -4,30 +4,18 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   protocol_type = "HTTP" // The protocol used by the API Gateway
 
   cors_configuration {
-    allow_origins = ["http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}", "http://nknez.tech", "https://nknez.tech"] // Allow the origin of the request
-    allow_methods = ["GET", "OPTIONS"]
+    allow_origins = ["*"] // Allow the origin of the request
+    allow_methods = ["GET", "OPTIONS", "POST"]
     allow_headers = ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
   }
 
   depends_on = [aws_s3_bucket_website_configuration.website_s3b]
 }
 
-resource "aws_apigatewayv2_integration" "kits_listing_integration" { // Create an integration for the kits listing
+resource "aws_apigatewayv2_integration" "load_products_integration" { // Create an integration for the kits listing
   api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
   integration_type = "AWS_PROXY"
-  integration_uri  = aws_lambda_function.list_kits.invoke_arn
-}
-
-resource "aws_apigatewayv2_integration" "boots_listing_integration" { // Create an integration for the boots listing
-  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
-  integration_type = "AWS_PROXY"
-  integration_uri  = aws_lambda_function.list_boots.invoke_arn
-}
-
-resource "aws_apigatewayv2_integration" "accessories_listing_integration" { // Create an integration for the accessories listing
-  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
-  integration_type = "AWS_PROXY"
-  integration_uri  = aws_lambda_function.list_accessories.invoke_arn
+  integration_uri  = aws_lambda_function.list_products.invoke_arn
 }
 
 resource "aws_apigatewayv2_integration" "home_ads_integration" { // Create an integration for the home page
@@ -36,22 +24,40 @@ resource "aws_apigatewayv2_integration" "home_ads_integration" { // Create an in
   integration_uri  = aws_lambda_function.list_home_page.invoke_arn
 }
 
-resource "aws_apigatewayv2_route" "route_kits" { // Create a route for the kits listing
-  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
-  route_key = "GET /kits"
-  target    = "integrations/${aws_apigatewayv2_integration.kits_listing_integration.id}"
+resource "aws_apigatewayv2_integration" "store_user_data_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.store_user_data.invoke_arn
 }
 
-resource "aws_apigatewayv2_route" "boots_kits" { // Create a route for the boots listing
-  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
-  route_key = "GET /boots"
-  target    = "integrations/${aws_apigatewayv2_integration.boots_listing_integration.id}"
+resource "aws_apigatewayv2_integration" "get_user_data_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.get_user_data.invoke_arn
 }
 
-resource "aws_apigatewayv2_route" "accessories_kits" { // Create a route for the accessories listing
+resource "aws_apigatewayv2_integration" "add_to_cart_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.add_to_cart.invoke_arn
+}
+
+resource "aws_apigatewayv2_integration" "load_cart_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.load_cart.invoke_arn
+}
+
+resource "aws_apigatewayv2_integration" "clear_cart_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.clear_cart.invoke_arn
+}
+
+resource "aws_apigatewayv2_route" "route_products" { // Create a route for the product listing
   api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
-  route_key = "GET /accessories"
-  target    = "integrations/${aws_apigatewayv2_integration.accessories_listing_integration.id}"
+  route_key = "GET /loadProducts"
+  target    = "integrations/${aws_apigatewayv2_integration.load_products_integration.id}"
 }
 
 resource "aws_apigatewayv2_route" "route_home" { // Create a route for the home page
@@ -60,26 +66,38 @@ resource "aws_apigatewayv2_route" "route_home" { // Create a route for the home 
   target    = "integrations/${aws_apigatewayv2_integration.home_ads_integration.id}"
 }
 
-resource "aws_lambda_permission" "kits_api_gateway_permission" { // Create a permission for the kits listing
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.list_kits.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+resource "aws_apigatewayv2_route" "storeUserData_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "POST /storeUserData"
+  target    = "integrations/${aws_apigatewayv2_integration.store_user_data_integration.id}"
+}
+resource "aws_apigatewayv2_route" "getUserData_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "GET /getUserData"
+  target    = "integrations/${aws_apigatewayv2_integration.get_user_data_integration.id}"
 }
 
-resource "aws_lambda_permission" "boots_api_gateway_permission" { // Create a permission for the boots listing
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.list_boots.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+resource "aws_apigatewayv2_route" "addToCart_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "POST /addToCart"
+  target    = "integrations/${aws_apigatewayv2_integration.add_to_cart_integration.id}"
 }
 
-resource "aws_lambda_permission" "accessories_api_gateway_permission" { // Create a permission for the accessories listing
+resource "aws_apigatewayv2_route" "loadCart_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "GET /loadCart"
+  target    = "integrations/${aws_apigatewayv2_integration.load_cart_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "clearCart_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "POST /clearCart"
+  target    = "integrations/${aws_apigatewayv2_integration.clear_cart_integration.id}"
+}
+resource "aws_lambda_permission" "products_api_gateway_permission" { // Create a permission for the kits listing
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.list_accessories.function_name
+  function_name = aws_lambda_function.list_products.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }
@@ -88,6 +106,45 @@ resource "aws_lambda_permission" "home_api_gateway_permission" { // Create a per
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.list_home_page.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+
+resource "aws_lambda_permission" "store_user_data_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.store_user_data.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+resource "aws_lambda_permission" "get_user_data_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.get_user_data.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+
+resource "aws_lambda_permission" "add_to_cart_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.add_to_cart.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+
+resource "aws_lambda_permission" "load_cart_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.load_cart.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+
+resource "aws_lambda_permission" "clear_cart_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.clear_cart.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }
