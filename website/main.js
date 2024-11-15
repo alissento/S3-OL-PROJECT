@@ -9,6 +9,8 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
+const apiURLTerraform = 'api.nknez.tech';
+
 async function signIn(email, password) {
     try {
         const user = await firebase.auth().signInWithEmailAndPassword(email, password);
@@ -56,7 +58,6 @@ async function storeUserDetails(uid, firstName, lastName, email, streetName, cit
         phoneNumber: phone
     };
 
-    const apiURLTerraform = '${api_url}';
     const apiUrl = apiURLTerraform+'/storeUserData';
     try {
         const response = await fetch(apiUrl, {
@@ -79,7 +80,6 @@ async function storeUserDetails(uid, firstName, lastName, email, streetName, cit
 }
 
 async function getUserData(userId) {
-    const apiURLTerraform = '${api_url}';
     const apiUrl = apiURLTerraform+'/getUserData';
     try {
         const response = await fetch(`$${apiUrl}?user_id=$${userId}`, {
@@ -133,7 +133,6 @@ async function addToCart(product_id, size) {
         return;
     }
 
-    const apiURLTerraform = '${api_url}';
     const apiUrl = apiURLTerraform+'/addToCart';
 
     const requestData = {
@@ -168,7 +167,6 @@ async function loadCart() {
         return;
     }
 
-    const apiURLTerraform = '${api_url}';
     const apiUrl = apiURLTerraform+'/loadCart';
 
     try {
@@ -198,7 +196,6 @@ async function loadCart() {
 }
 
 async function clearCart(user_id) {
-    const apiURLTerraform = '${api_url}';
     const apiUrl = apiURLTerraform+'/clearCart';
 
     const requestData = {

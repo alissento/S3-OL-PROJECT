@@ -1,11 +1,3 @@
-data "template_file" "script_js" {
-  template = file("../website/script.js") // Replace API URL inside the script.js file
-  vars = {
-    api_url = aws_apigatewayv2_api.api_gw_http_fb4u.api_endpoint
-  }
-
-  depends_on = [aws_apigatewayv2_api.api_gw_http_fb4u]
-}
 resource "aws_s3_bucket" "s3b" { // Defining the S3 bucket
   bucket        = "nknez.tech"   // My own personal domain for testing
   force_destroy = true
@@ -65,7 +57,7 @@ resource "aws_s3_object" "index_html_upload" { // Adding index.html to the S3 bu
 resource "aws_s3_object" "js_script_upload" { // Adding script.js to the S3 bucket
   bucket       = aws_s3_bucket.s3b.bucket
   key          = "script.js"
-  content      = data.template_file.script_js.rendered
+  source        = "../website/main.js"
   content_type = "application/javascript"
 
   depends_on = [data.template_file.script_js]

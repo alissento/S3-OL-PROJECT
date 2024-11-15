@@ -12,6 +12,26 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   depends_on = [aws_s3_bucket_website_configuration.website_s3b]
 }
 
+resource "aws_api_gateway_domain_name" "custom_domain_api_gw" { // Create a custom domain for the API Gateway
+  domain_name              = "api.nknez.tech"
+  regional_certificate_arn = "arn:aws:acm:eu-central-1:938403545153:certificate/11fd99b7-735e-4be9-bd22-0e97b7cf9186"
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
+
+resource "aws_route53_record" "custom_domain_api_gw_record" { // Create a Route 53 record for the custom domain
+  name    = aws_api_gateway_domain_name.custom_domain_api_gw.domain_name
+  type    = "A"
+  zone_id = "Z00258873HV22349GRMON"
+
+  alias {
+    evaluate_target_health = true
+    name                   = aws_api_gateway_domain_name.custom_domain_api_gw.regional_domain_name
+    zone_id                = aws_api_gateway_domain_name.custom_domain_api_gw.regional_zone_id
+  }
+}
 resource "aws_apigatewayv2_integration" "load_products_integration" { // Create an integration for the kits listing
   api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
   integration_type = "AWS_PROXY"

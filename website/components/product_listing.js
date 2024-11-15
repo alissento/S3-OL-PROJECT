@@ -1,6 +1,6 @@
 async function loadStuff(product_tag) {
     // window.history.pushState({}, '', api_route);
-    const apiURLTerraform = '${api_url}';
+    const apiURLTerraform = 'api.nknez.tech';;
     const apiUrl = apiURLTerraform+'/loadProducts' // apiURL based on Terraform output and the API route
     try {
         const response = await fetch(`$${apiUrl}?product_tag=$${product_tag}`, {
