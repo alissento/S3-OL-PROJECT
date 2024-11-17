@@ -12,24 +12,30 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   depends_on = [aws_s3_bucket_website_configuration.website_s3b]
 }
 
-resource "aws_api_gateway_domain_name" "custom_domain_api_gw" { // Create a custom domain for the API Gateway
-  domain_name              = "api.nknez.tech"
-  regional_certificate_arn = "arn:aws:acm:eu-central-1:938403545153:certificate/11fd99b7-735e-4be9-bd22-0e97b7cf9186"
-
-  endpoint_configuration {
-    types = ["REGIONAL"]
+resource "aws_apigatewayv2_domain_name" "custom_domain_api_gw" {
+  domain_name = "api.nknez.tech"
+  domain_name_configuration {
+    certificate_arn = "arn:aws:acm:eu-central-1:938403545153:certificate/11fd99b7-735e-4be9-bd22-0e97b7cf9186"
+    endpoint_type   = "REGIONAL"
+    security_policy = "TLS_1_2"
   }
 }
 
-resource "aws_route53_record" "custom_domain_api_gw_record" { // Create a Route 53 record for the custom domain
-  name    = aws_api_gateway_domain_name.custom_domain_api_gw.domain_name
-  type    = "A"
+resource "aws_apigatewayv2_api_mapping" "api_mapping" {
+  api_id      = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  domain_name = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name
+  stage       = aws_apigatewayv2_stage.default_stage.name
+}
+
+resource "aws_route53_record" "custom_domain_api_gw_record" {
   zone_id = "Z00258873HV22349GRMON"
+  name    = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name
+  type    = "A"
 
   alias {
-    evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.custom_domain_api_gw.regional_domain_name
-    zone_id                = aws_api_gateway_domain_name.custom_domain_api_gw.regional_zone_id
+    name                   = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name_configuration[0].target_domain_name
+    zone_id                = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name_configuration[0].hosted_zone_id
+    evaluate_target_health = false
   }
 }
 resource "aws_apigatewayv2_integration" "load_products_integration" { // Create an integration for the kits listing

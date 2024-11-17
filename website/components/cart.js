@@ -1,4 +1,4 @@
-async function displayCart(cartItems, user_id) {
+export async function displayCart(cartItems, user_id) {
     const mainContent = document.getElementById('main_content');
     mainContent.innerHTML = '';
     mainContent.className = 'flex flex-col items-center text-center m-11';

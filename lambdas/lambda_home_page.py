@@ -26,5 +26,10 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
 
     return {
         'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
         'body': json.dumps(ads) # Return the ads list as JSON
     }

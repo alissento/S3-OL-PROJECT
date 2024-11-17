@@ -1,3 +1,5 @@
+import { loadAds } from "./components/home";
+
 const firebaseConfig = {
     apiKey: "AIzaSyCDVLpCzDVNuDgjaQ3GMbjcwYtSZprxNdI",
     authDomain: "fb4u-2e88b.firebaseapp.com",

@@ -1,4 +1,4 @@
-async function loadAds() {
+export async function loadAds() {
     const apiURLTerraform = '${api_url}'
     const apiUrl = apiURLTerraform+'/'; // apiURL based on Terraform output and the API route
 
