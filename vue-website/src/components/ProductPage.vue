@@ -1,58 +1,116 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { apiURL } from '../config.js';
+    import { useRoute } from 'vue-router';
+    import { ref, onMounted } from 'vue';
+    import { auth, apiURL } from '../config.js';
+    import { useToast } from "vue-toastification"
+    import LoadingSpinner from './LoadingSpinner.vue';
 
-const fullApiUrl = apiURL + '/loadProducts';
+    const fullApiUrl = apiURL + '/loadProducts';
+    const route = useRoute();
+    const id = route.params.id;
+    const product = ref({});
+    const sizes = ref([]);
+    const selectedSize = ref(null);
+    const toast = useToast();
+    const loading = ref(true);
+    const addingToCart = ref(false);
 
-const route = useRoute();
-const id = route.params.id;
-const product = ref({});
-const sizes = ref([]);
-const selectedSize = ref(null);
 
-const selectSize = (size) => {
-    selectedSize.value = size; // Correctly set the selected size
-    console.log(`Selected size: ${selectedSize.value}`);
-};
+    const selectSize = (size) => {
+        selectedSize.value = size; // Correctly set the selected size
+        console.log(`Selected size: ${selectedSize.value}`);
+    };
 
-async function fetchProducts() {
-    try {
-        const response = await fetch(`${fullApiUrl}?product_id=${id}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            },
-        });
+    async function fetchProducts() {
+        try {
+            const response = await fetch(`${fullApiUrl}?product_id=${id}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            });
 
-        const data = await response.json();
-        product.value = data[0]; // Assume response is an array
+            const data = await response.json();
+            product.value = data[0]; // Assume response is an array
 
-        sizeGenerator(product.value.productTag);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-function sizeGenerator(tag) {
-    console.log(`size tag: ${tag}`);
-    if (tag === 'kits') {
-        sizes.value = ['S', 'M', 'L', 'XL', 'XXL'];
-    } else if (tag === 'boots') {
-        sizes.value = [];
-        for (let size = 36; size <= 46; size += 0.5) {
-            sizes.value.push(size.toString());
+            sizeGenerator(product.value.productTag);
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            loading.value = false;
         }
     }
-}
 
-onMounted(() => {
-    fetchProducts();
-});
+    function sizeGenerator(tag) {
+        console.log(`size tag: ${tag}`);
+        if (tag === 'kits') {
+            sizes.value = ['S', 'M', 'L', 'XL', 'XXL'];
+        } else if (tag === 'boots') {
+            sizes.value = [];
+            for (let size = 36; size <= 46; size += 0.5) {
+                sizes.value.push(size.toString());
+            }
+        }
+    }
+
+    async function addToCart() {
+        
+        if (!selectedSize.value) {
+            toast.error("Please select a size");
+            return;
+        }
+
+        addingToCart.value = true;
+        const user = auth.currentUser;
+
+
+        if (!user) {
+            toast.error("You must be logged in to add items to cart");
+            return;
+        }
+
+        const apiUrlCart = apiURL+'/addToCart';
+
+        console.log(user.uid, product.value.product_id, selectedSize.value);
+        const requestData = {
+            user_id: user.uid,
+            product_id: product.value.product_id,
+            size: selectedSize.value
+        };
+
+        try {
+            const response = await fetch(apiUrlCart, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            console.log('Response:', response);
+
+            if (!response.ok) {
+                throw new Error('Failed to add item to cart');
+            }
+
+            toast.success("Product added to cart!");
+
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            toast.error("Failed to add item to cart");
+        } finally {
+            addingToCart.value = false;
+        }
+    }
+
+    onMounted(() => {
+        fetchProducts();
+    });
 </script>
 
 <template>
-    <main class="flex flex-grow">
+    <LoadingSpinner v-if="loading" />
+    <main v-else class="flex flex-grow">
         <div class="flex flex-col w-[50%] items-left text-left m-11 ml-[12%]">
             <img 
                 :src="'/images/' + product.photoID" 
@@ -78,7 +136,7 @@ onMounted(() => {
                     {{ size }}
                 </button>
             </div>
-            <button class="mt-8 px-40 py-5 text-5xl bg-blue-700 text-white rounded-lg">
+            <button @click="addToCart()" class="mt-8 px-40 py-5 text-5xl bg-blue-700 text-white rounded-lg">
                 ADD TO CART
             </button>
         </div>

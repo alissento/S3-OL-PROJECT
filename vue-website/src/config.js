@@ -8,7 +8,9 @@ const firebaseConfig = {
     storageBucket: "fb4u-2e88b.firebasestorage.app",
     messagingSenderId: "969831689978",
     appId: "1:969831689978:web:1d68182bc558765be86343"
-};
+  };
+  
+  
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

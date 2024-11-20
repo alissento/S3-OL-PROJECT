@@ -3,7 +3,7 @@ name: 'CD for website files in main branch'
 on:
   push:
     branches: [ 'main' ]
-    paths: [ 'website/**' ]
+    paths: [ 'vue-website/**' ]
 
 permissions:
   contents: read
@@ -18,9 +18,32 @@ jobs:
         shell: bash
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
-        
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Set up Terraform CLI
+      uses: hashicorp/setup-terraform@v3
+    
+    - name: Terraform init
+      run: |
+        cd terraform/
+        terraform init  
+
+    - name: Install dependencies 
+      run: | 
+        cd vue-website/  
+        npm install
+
+    - name: Build website
+      run: |
+        cd vue-website/
+        npm run build
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -28,7 +51,19 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: 'eu-central-1'
 
-    - name: Deploy to S3 bucket
+    - name: Deploy to S3 bucket 
       run: |
-        aws s3 sync website/ s3://fbforyou.com/ --delete --acl public-read
+        cd vue-website/
+        aws s3 sync dist/ s3://nknez.tech/ --delete --region eu-central-1
+
+    - name: Fetch CloudFront distribution ID from Terraform output
+      id: cloudfront
+      run: echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
+
+    - name: Invalidate CloudFront cache
+      env:
+        AWS_REGION: us-east-1
+      run: |
+        cd terraform/
+        aws cloudfront create-invalidation --distribution-id ${{ env.cloudfront_id }} --paths "/*"
 

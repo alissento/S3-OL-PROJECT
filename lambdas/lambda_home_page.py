@@ -17,11 +17,13 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
         ad_id = item['ad_id']
         ad_label = item['ad_label']
         ad_photo = f'{ad_id}.png'
+        ad_product_id = item['product_id']
 
         ads.append({
             'ad_id': ad_id,
             'ad_label': ad_label,
-            'ad_photo': ad_photo
+            'ad_photo': ad_photo,
+            'ad_product_id': ad_product_id
         })
 
     return {

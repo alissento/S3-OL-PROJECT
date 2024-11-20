@@ -16,22 +16,12 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
         email = body['email']
         first_name = body['firstName']
         last_name = body['lastName']
-        street_name = body['streetName']
-        city = body['city']
-        postal_code = body['postalCode']
-        country = body['country']
-        phone_number = body['phoneNumber']
 
         response = table.put_item(Item={
             'user_id': user_id,
             'email': email,
             'first_name': first_name,
-            'last_name': last_name,
-            'street_name': street_name,
-            'city': city,
-            'postal_code': postal_code,
-            'country': country,
-            'phone_number': phone_number
+            'last_name': last_name
         })
 
         print(response)

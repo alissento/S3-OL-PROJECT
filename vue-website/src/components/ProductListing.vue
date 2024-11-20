@@ -1,12 +1,14 @@
 <script setup>
     import { ref, onMounted, watch } from 'vue';
     import { useRoute } from 'vue-router';
-    import { apiURL } from '../config.js';
-
+    import { apiURL } from '@/config.js';
+    import LoadingSpinner from './LoadingSpinner.vue';
+    
     const fullApiUrl = apiURL+'/loadProducts';
 
     const route = useRoute();
     const products = ref([]);
+    const loading = ref(true);
 
     async function fetchProducts(tag) {
         try {
@@ -22,6 +24,8 @@
 
         } catch (error) {
             console.error('Error:', error);
+        } finally {
+            loading.value = false;
         }
     }
 
@@ -38,8 +42,9 @@
 </script>
 
 <template>
-    <main class='flex justify-center items-start flex-wrap w-full uppercase'>
-        <div 
+    <LoadingSpinner v-if="loading" />
+    <main v-else class='flex justify-center items-start flex-wrap w-full uppercase'>
+        <div
             v-for='product in products' 
             :key='product.product_id' 
             class='flex flex-col items-center text-center m-5'

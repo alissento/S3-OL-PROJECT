@@ -20,8 +20,8 @@
     </ul>
   </nav>
   <div class="flex items-center">
-    <img id="user_icon" src="/images/user_icon.png" onclick="checkLogin()" class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="User">
-    <img id="cart_icon" src="/images/shopping_cart_icon.png" onclick="loadCart() "class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="Cart">
+    <RouterLink to="/login"><img id="user_icon" src="/images/user_icon.png" class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="User"></RouterLink>
+    <RouterLink to="/cart"><img id="cart_icon" src="/images/shopping_cart_icon.png" class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="Cart"></RouterLink>
   </div>
 </header>
 </template>
