@@ -13,11 +13,11 @@ provider "aws" { // Define the AWS provider
   region = var.target_region
 }
 
-terraform { // Define the Terraform backend
+terraform {      // Define the Terraform backend
   backend "s3" { // Use the S3 backend
-    bucket = "nkterraform"
-    key    = "terraform/terraform.tfstate"
-    region = "eu-central-1"
+    bucket  = "nkterraform"
+    key     = "terraform/terraform.tfstate"
+    region  = "eu-central-1"
     encrypt = true
   }
 }

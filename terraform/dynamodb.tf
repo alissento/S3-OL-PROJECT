@@ -7,7 +7,7 @@ variable "dynamodb_billing_mode" {
 resource "aws_dynamodb_table" "fb4u_products" { // Create a DynamoDB table for the products
   name         = "fb4u_products"
   billing_mode = var.dynamodb_billing_mode // Set the billing mode to pay per request
-  hash_key     = "product_id"      // Set the hash key (primary key) to product_id
+  hash_key     = "product_id"              // Set the hash key (primary key) to product_id
 
   attribute {
     name = "product_id"
@@ -29,7 +29,7 @@ resource "aws_dynamodb_table" "fb4u_products" { // Create a DynamoDB table for t
 resource "aws_dynamodb_table" "fb4u_ads" { // Create a DynamoDB table for the ads
   name         = "fb4u_ads"
   billing_mode = var.dynamodb_billing_mode // Set the billing mode to pay per request
-  hash_key     = "ad_id"           // Set the hash key (primary key) to ad_id
+  hash_key     = "ad_id"                   // Set the hash key (primary key) to ad_id
 
   attribute {
     name = "ad_id"
@@ -40,22 +40,22 @@ resource "aws_dynamodb_table" "fb4u_ads" { // Create a DynamoDB table for the ad
 resource "aws_dynamodb_table" "fb4u_users" { // Create a DynamoDB table for the users
   name         = "fb4u_users"
   billing_mode = var.dynamodb_billing_mode // Set the billing mode to pay per request
-  hash_key     = "user_id"         // Set the hash key (primary key) to user_id
+  hash_key     = "user_id"                 // Set the hash key (primary key) to user_id
 
   attribute {
     name = "user_id"
     type = "S"
   }
-  
+
 }
 
 resource "aws_dynamodb_table" "fb4u_cart" { // Create a DynamoDB table for the cart
   name         = "fb4u_cart"
   billing_mode = var.dynamodb_billing_mode // Set the billing mode to pay per request
-  hash_key     = "user_id"         // Set the hash key (primary key) to user_id so that each user has a unique cart
+  hash_key     = "user_id"                 // Set the hash key (primary key) to user_id so that each user has a unique cart
   attribute {
     name = "user_id"
     type = "S"
   }
-  
+
 }
