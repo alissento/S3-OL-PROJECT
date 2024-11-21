@@ -13,7 +13,7 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
 }
 
 resource "aws_apigatewayv2_domain_name" "custom_domain_api_gw" {
-  domain_name = "api.nknez.tech"
+  domain_name = local.api_domain_name
   domain_name_configuration {
     certificate_arn = "arn:aws:acm:eu-central-1:938403545153:certificate/11fd99b7-735e-4be9-bd22-0e97b7cf9186"
     endpoint_type   = "REGIONAL"
@@ -28,7 +28,7 @@ resource "aws_apigatewayv2_api_mapping" "api_mapping" {
 }
 
 resource "aws_route53_record" "custom_domain_api_gw_record" {
-  zone_id = "Z00258873HV22349GRMON"
+  zone_id = local.route53_id
   name    = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name
   type    = "A"
 

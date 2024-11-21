@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3b" { // Defining the S3 bucket
-  bucket        = "nknez.tech"   // My own personal domain for testing
+  bucket        = local.domain_name   // My own personal domain for testing
   force_destroy = true
 }
 
