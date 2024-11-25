@@ -31,17 +31,17 @@ jobs:
     
     - name: Terraform init
       run: |
-        cd terraform/
+        cd terraform
         terraform init  
 
     - name: Install dependencies 
       run: | 
-        cd vue-website/  
+        cd vue-website
         npm install
 
     - name: Build website
       run: |
-        cd vue-website/
+        cd vue-website
         npm run build
 
     - name: Configure AWS credentials
@@ -53,7 +53,7 @@ jobs:
 
     - name: Deploy to S3 bucket 
       run: |
-        cd vue-website/
+        cd vue-website
         aws s3 sync dist/ s3://nknez.tech/ --delete --region eu-central-1
 
     - name: Fetch CloudFront distribution ID from Terraform output
@@ -64,6 +64,6 @@ jobs:
       env:
         AWS_REGION: us-east-1
       run: |
-        cd terraform/
+        cd terraform
         aws cloudfront create-invalidation --distribution-id ${{ env.cloudfront_id }} --paths "/*"
 
