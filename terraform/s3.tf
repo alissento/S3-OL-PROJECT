@@ -1,5 +1,5 @@
-resource "aws_s3_bucket" "s3b" { // Defining the S3 bucket
-  bucket        = local.domain_name   // My own personal domain for testing
+resource "aws_s3_bucket" "s3b" {    // Defining the S3 bucket
+  bucket        = local.domain_name // My own personal domain for testing
   force_destroy = true
 }
 
@@ -7,7 +7,7 @@ resource "aws_s3_bucket_cors_configuration" "s3_cors" { // Defining the CORS con
   bucket = aws_s3_bucket.s3b.id
   cors_rule {
     allowed_methods = ["GET"]
-    allowed_origins = ["*"]
+    allowed_origins = ["https://${local.domain_name}"]
   }
 }
 
@@ -44,14 +44,4 @@ resource "aws_s3_bucket_policy" "bucket_policy_for_website" { // Setting the buc
   })
 
   depends_on = [aws_s3_bucket_public_access_block.s3b_enable_public_access]
-}
-
-resource "aws_s3_object" "photos_upload" { // Adding images to the S3 bucket
-  for_each = fileset("../website/images/", "**")
-  bucket   = aws_s3_bucket.s3b.bucket
-  key      = "images/${each.key}"
-  source   = "../website/images/${each.value}"
-}
-output "website_url" { // Output of the URL of the website
-  value = "http://${aws_s3_bucket_website_configuration.website_s3b.website_endpoint}"
 }

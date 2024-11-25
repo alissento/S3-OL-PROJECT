@@ -56,6 +56,14 @@
         }
     }
 
+    async function myOrders() {
+        toast.info('My orders page is under construction');
+    }
+
+    async function changeDetails() {
+        toast.info('Change details page is under construction');
+    }
+
     onMounted(() => {
         getUserData();
     });
@@ -66,8 +74,8 @@
     <main v-else class="flex flex-col items-center text-center m-11">
         <h1 class="text-5xl font-bold text-center mb-8">{{ firstName }} {{ lastName }}</h1>
         <p class="text-3xl text-center">{{ email }}</p>
-        <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="alert('My orders page is under construction')">My orders</button>
-        <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="alert('Change details page is under construction')">Change details</button>
+        <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="myOrders">My orders</button>
+        <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="changeDetails">Change details</button>
         <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="logOut">Sign Out</button>
     </main>
 </template>

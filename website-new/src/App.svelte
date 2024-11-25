@@ -3,6 +3,7 @@
   import Home from './lib/Home.svelte'
   import Product_listing from './lib/Product_listing.svelte'
   import './tailwind.css'
+  import { Router, Route, Link } from "svelte-routing";
 
   let activeSection = $state('home');
 
@@ -37,10 +38,9 @@
     <img id="cart_icon" src="./images/shopping_cart_icon.png" class="w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="Cart">
   </div>
   </header>
-  {#if activeSection === 'home'}
-    <Home />
-  {:else if activeSection === 'kits'}
-    <Product_listing product_tag="kit" />
-  {/if}
+  <Router>
+    <Route path="/" component={Home} />
+    <Route path="/products" component={Product_listing} />
+  </Router>
   <Footer />
 </main>

@@ -181,6 +181,3 @@ resource "aws_apigatewayv2_stage" "default_stage" { // Create a stage for the AP
   auto_deploy = true
 }
 
-output "http_api_url" { // Output the URL of the API Gateway
-  value = aws_apigatewayv2_api.api_gw_http_fb4u.api_endpoint
-}
