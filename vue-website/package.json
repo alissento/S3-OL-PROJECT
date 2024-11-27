@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "tailwind": "tailwindcss -o ./src/assets/tailwind.css --watch"
+    "tailwind": "tailwindcss -o ./src/assets/tailwind.css --watch",
+    "tailwindbuild": "tailwindcss -o ./src/assets/tailwind.css"
   },
   "dependencies": {
     "firebase": "^11.0.2",
