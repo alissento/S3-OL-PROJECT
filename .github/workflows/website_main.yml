@@ -2,11 +2,10 @@ name: 'CD for website files in main branch'
 
 on:
   push:
-    branches: [ 'main' ]
-    paths: [ 'vue-website/**' ]
-
-permissions:
-  contents: read
+    branches: 
+      - 'main'
+    paths: 
+      - 'vue-website/**'
 
 jobs:
   website:
@@ -31,17 +30,17 @@ jobs:
     
     - name: Terraform init
       run: |
-        cd terraform/
+        cd terraform
         terraform init  
 
     - name: Install dependencies 
       run: | 
-        cd vue-website/  
+        cd vue-website  
         npm install
 
     - name: Build website
       run: |
-        cd vue-website/
+        cd vue-website
         npm run build
 
     - name: Configure AWS credentials
