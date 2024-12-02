@@ -1,14 +1,9 @@
-provider "aws" {
-  region = "us-east-1"
-  alias  = "us-east-1"
-}
+resource "aws_cloudfront_distribution" "s3_distribution" { // Define the CloudFront distribution for the S3 bucket
+  provider = aws.us-east-1 // Use the alias AWS provider for the us-east-1 region 
 
-resource "aws_cloudfront_distribution" "s3_distribution" {
-  provider = aws.us-east-1
+  aliases = [local.domain_name] // Define the domain name for the CloudFront distribution 
 
-  aliases = [local.domain_name]
-
-  origin {
+  origin { // Define the origin for the CloudFront distribution 
     domain_name = "nknez.tech.s3-website.eu-central-1.amazonaws.com"
     origin_id   = "S3-Website-nknez.tech"
 
@@ -25,7 +20,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment             = "S3 bucket website distribution"
   default_root_object = "index.html"
 
-  default_cache_behavior {
+  default_cache_behavior { // Define the default cache behavior for the CloudFront distribution 
     target_origin_id       = "S3-Website-nknez.tech"
     viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD"]
@@ -33,13 +28,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cache_policy_id        = "658327ea-f89d-4fab-a63d-7e88639e58f6"
   }
 
-  restrictions {
+  restrictions { // Define the restrictions for the CloudFront distribution 
     geo_restriction {
       restriction_type = "none"
     }
   }
 
-  viewer_certificate {
+  viewer_certificate { // Define the viewer certificate for the CloudFront distribution 
     acm_certificate_arn      = aws_acm_certificate.tls-cert.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
@@ -48,7 +43,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   depends_on = [aws_acm_certificate.tls-cert]
 }
 
-resource "aws_acm_certificate" "tls-cert" {
+resource "aws_acm_certificate" "tls-cert" { // Define the ACM certificate for the CloudFront distribution 
   provider = aws.us-east-1
 
   domain_name       = local.domain_name
@@ -59,7 +54,7 @@ resource "aws_acm_certificate" "tls-cert" {
   }
 }
 
-resource "aws_route53_record" "record_for_cloudfront" {
+resource "aws_route53_record" "record_for_cloudfront" { // Define the Route 53 record for the CloudFront distribution
   zone_id = local.route53_id
   name    = local.domain_name
   type    = "A"

@@ -6,16 +6,25 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   cors_configuration {
     allow_origins = ["*"] // Allow the origin of the request
     allow_methods = ["GET", "OPTIONS", "POST"]
-    allow_headers = ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
+    allow_headers = ["*"]
   }
 
   depends_on = [aws_s3_bucket_website_configuration.website_s3b]
 }
 
+resource "aws_acm_certificate" "tls-cert-api" { // Create a certificate for the API Gateway
+  domain_name       = local.api_domain_name
+  validation_method = "DNS"
+
+  tags = {
+    Name = "api.nknez.tech certificate"
+  }
+}
+
 resource "aws_apigatewayv2_domain_name" "custom_domain_api_gw" {
   domain_name = local.api_domain_name
   domain_name_configuration {
-    certificate_arn = "arn:aws:acm:eu-central-1:938403545153:certificate/11fd99b7-735e-4be9-bd22-0e97b7cf9186"
+    certificate_arn = aws_acm_certificate.tls-cert-api.arn
     endpoint_type   = "REGIONAL"
     security_policy = "TLS_1_2"
   }

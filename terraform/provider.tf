@@ -9,8 +9,13 @@ variable "target_region" { // Define a variable for the target region
   }
 }
 
-provider "aws" { // Define the AWS provider
+provider "aws" { // Define the default AWS provider
   region = var.target_region
+}
+
+provider "aws" { // Define the alias AWS provider for the us-east-1 region
+  region = "us-east-1"
+  alias  = "us-east-1"
 }
 
 terraform {      // Define the Terraform backend
