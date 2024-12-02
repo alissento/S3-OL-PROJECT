@@ -3,37 +3,37 @@ name: 'CI/CD for Lambda backend code deployment'
 on:
   push:
     branches:
-      - 'main'
+      - 'main' # Pipeline will run only when code is pushed to the main branch
     paths:
-      - 'lambdas/**'
+      - 'lambdas/**' # Pipeline will run only when code in the lambdas directory is changed
 
 jobs:
   deploy:
-    name: 'Deploy Lambda Functions'
-    runs-on: ubuntu-latest
+    name: 'Deploy Lambda Functions' 
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    - name: Checkout repository # Checkout the repository 
+      uses: actions/checkout@v4 
 
-    - name: Install AWS CLI
+    - name: Install AWS CLI # Install the AWS CLI
       run: |
         sudo apt-get update
-        sudo apt-get install -y awscli
+        sudo apt-get install -y awscli 
 
-    - name: Install Dependencies
+    - name: Install Dependencies # Install boto3 and simplejson libraries
       run: pip install boto3 simplejson
 
-    - name: Package Lambda Functions
-      run: |
+    - name: Package Lambda Functions # Create a zip file for each Lambda function
+      run: | 
         mkdir -p lambdas/packages
         for FILE in lambdas/*.py; do
             FUNCTION_NAME=$(basename "${FILE%.*}")
             zip -r lambdas/packages/${FUNCTION_NAME}.zip ${FILE}
         done
 
-    - name: Deploy Lambda Functions
-      env:
+    - name: Deploy Lambda Functions # Update the code of each Lambda function
+      env: # Set AWS credentials and region as environment variables
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'eu-central-1'

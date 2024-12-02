@@ -6,7 +6,6 @@
     import router from '@/router/index.js';
     import { onMounted } from 'vue';
     import loginCheck from '@/logincheck';
-    import LoadingSpinner from './LoadingSpinner.vue';
 
     const toast = useToast();
     const email = ref('');
