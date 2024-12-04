@@ -8,6 +8,7 @@ export default function loginCheck() {
             console.log('User is logged in');
             router.push('/user');
         } else {
-            console.log('User is not logged in');        }
+            console.log('User is not logged in');        
+        }
     });
 }

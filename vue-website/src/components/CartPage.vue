@@ -58,11 +58,6 @@
         console.log('Total price:', totalPrice.value);
     }
 
-
-    async function checkout() {
-        toast.info('Checkout functionality not implemented');
-    }
-
     async function clearCart() {
         const user = auth.currentUser;
         const userId = user.uid;
@@ -110,7 +105,7 @@
             </div>
         </div>
         <p class="text-3xl font-bold mt-8">Total Price: {{ totalPrice }}€</p>
-        <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="checkout">Checkout</button>
+        <RouterLink to='/checkout' class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3 flex items-center justify-center">Checkout</RouterLink>
         <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="clearCart">Clear Cart</button>
     </div>
 </template>

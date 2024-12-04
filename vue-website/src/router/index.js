@@ -6,6 +6,10 @@ import LoginPage from '@/components/LoginPage.vue';
 import RegisterPage from '@/components/RegisterPage.vue';
 import UserPage from '@/components/UserPage.vue';
 import CartPage from '@/components/CartPage.vue';
+import ChangePassword from '@/components/ChangePassword.vue';
+import ChangeDetails from '@/components/ChangeDetails.vue';
+import Checkout from '@/components/Checkout.vue';
+import MyOrders from '@/components/MyOrders.vue';
 
 const routes = [
     { path: '/', component: HomePage },
@@ -15,6 +19,10 @@ const routes = [
     { path: '/register', component: RegisterPage },
     { path: '/user', component: UserPage },
     { path: '/cart', component: CartPage },
+    { path: '/change-password', component: ChangePassword },
+    { path: '/change-details', component: ChangeDetails },
+    { path: '/checkout', component: Checkout },
+    { path: '/my-orders', component: MyOrders }
 ];
   
 const router = createRouter({

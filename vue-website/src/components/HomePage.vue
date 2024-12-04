@@ -1,33 +1,22 @@
 <script setup>
     import { ref, onMounted } from 'vue';
-    import { apiURL } from '@/config.js';
+    import { useAdsStore} from '@/stores/adsStore';
     import LoadingSpinner from './LoadingSpinner.vue';
     
-    const fullApiUrl = apiURL+'/';
+    const adsStore = useAdsStore();
     const ads = ref([]);
     const loading = ref(true);
 
-    async function fetchAds() {
-        try {
-            const response = await fetch(fullApiUrl, {
-                method: 'GET',
-                headers: 
-                {
-                    'Accept': 'application/json'
-                }
-            });
-
-            ads.value = await response.json();
-
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            loading.value = false;
-        }
+    async function loadAds() {
+        loading.value = true;
+        await adsStore.fetchAds();
+        ads.value = adsStore.getAds;
+        console.log('Ads:', ads);
+        loading.value = false;
     }
 
     onMounted(() => {
-        fetchAds();
+        loadAds();
     });
 </script>
 

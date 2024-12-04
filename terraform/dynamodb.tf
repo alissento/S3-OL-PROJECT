@@ -51,5 +51,25 @@ resource "aws_dynamodb_table" "fb4u_cart" { // Create a DynamoDB table for the c
     name = "user_id"
     type = "S"
   }
+}
 
+resource "aws_dynamodb_table" "fb4u_orders" {
+  name         = "fb4u_orders"
+  billing_mode = local.dynamodb_billing_mode 
+  hash_key     = "order_id" 
+
+  attribute {
+    name = "order_id"
+    type = "S"
+  }               
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  global_secondary_index { // Create a global secondary index for the tag attribute to allow querying by tag
+    name            = "fb4u_user_orders"
+    hash_key        = "user_id"
+    projection_type = "ALL"
+  }
 }

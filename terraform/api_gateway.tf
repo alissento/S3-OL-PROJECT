@@ -89,6 +89,19 @@ resource "aws_apigatewayv2_integration" "clear_cart_integration" { // Create an 
   integration_uri  = aws_lambda_function.clear_cart.invoke_arn
 }
 
+resource "aws_apigatewayv2_integration" "checkout_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.checkout.invoke_arn
+}
+
+resource "aws_apigatewayv2_integration" "get_orders_integration" { // Create an integration for the home page
+  api_id           = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  integration_type = "AWS_PROXY"
+  integration_uri  = aws_lambda_function.get_orders.invoke_arn
+}
+
+
 resource "aws_apigatewayv2_route" "route_products" { // Create a route for the product listing
   api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
   route_key = "GET /loadProducts"
@@ -129,6 +142,19 @@ resource "aws_apigatewayv2_route" "clearCart_route" {
   route_key = "POST /clearCart"
   target    = "integrations/${aws_apigatewayv2_integration.clear_cart_integration.id}"
 }
+
+resource "aws_apigatewayv2_route" "checkout_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "POST /checkout"
+  target    = "integrations/${aws_apigatewayv2_integration.checkout_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "get_orders_route" {
+  api_id    = aws_apigatewayv2_api.api_gw_http_fb4u.id
+  route_key = "GET /getOrders"
+  target    = "integrations/${aws_apigatewayv2_integration.get_orders_integration.id}"
+}
+
 resource "aws_lambda_permission" "products_api_gateway_permission" { // Create a permission for the kits listing
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -180,6 +206,22 @@ resource "aws_lambda_permission" "clear_cart_permission" { // Create a permissio
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.clear_cart.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+
+resource "aws_lambda_permission" "get_orders_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.get_orders.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
+}
+
+resource "aws_lambda_permission" "checkout_permission" { // Create a permission for the storing user data
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.checkout.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.api_gw_http_fb4u.execution_arn}/*"
 }

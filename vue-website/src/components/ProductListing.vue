@@ -1,44 +1,32 @@
 <script setup>
     import { ref, onMounted, watch } from 'vue';
     import { useRoute } from 'vue-router';
-    import { apiURL } from '@/config.js';
+    import { useProductsStore } from '@/stores/productsStore';
     import LoadingSpinner from './LoadingSpinner.vue';
     
-    const fullApiUrl = apiURL+'/loadProducts';
+    const productsStore = useProductsStore();
 
     const route = useRoute();
     const products = ref([]);
     const loading = ref(true);
 
-    async function fetchProducts(tag) {
-        try {
-            const response = await fetch(`${fullApiUrl}?product_tag=${tag}`, {
-                method: 'GET',
-                headers: 
-                {
-                    'Accept': 'application/json'
-                }
-            });
-
-            products.value = await response.json();
-
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            loading.value = false;
-        }
+    async function loadProducts(category) {
+        loading.value = true;
+        await productsStore.fetchProductsByCategory(category);
+        products.value = productsStore.getProducts(category);
+        loading.value = false;
     }
 
     onMounted(() => {
-        fetchProducts(route.params.tag);
-    })
+        loadProducts(route.params.tag);
+    });
 
     watch(() => route.params.tag, 
         (newTag, oldTag) => {
             if (newTag !== oldTag) {
-            fetchProducts(newTag);
+            loadProducts(newTag);
         }
-    })
+    });
 </script>
 
 <template>

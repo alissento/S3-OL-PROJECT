@@ -26,7 +26,7 @@ resource "aws_iam_policy" "lambda_policy" { // Create a policy for the Lambda fu
           "dynamodb:DeleteItem"
         ],
         "Effect" : "Allow",
-        "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn, aws_dynamodb_table.fb4u_users.arn, aws_dynamodb_table.fb4u_cart.arn]
+        "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn, aws_dynamodb_table.fb4u_users.arn, aws_dynamodb_table.fb4u_cart.arn, aws_dynamodb_table.fb4u_orders.arn, "${aws_dynamodb_table.fb4u_orders.arn}/index/fb4u_user_orders"]
       },
       {
         "Action" : [ // Allow the Lambda function to write logs
@@ -116,6 +116,26 @@ resource "aws_lambda_function" "clear_cart" { // Create a Lambda function for th
   role          = aws_iam_role.iam_for_lambda.arn
   runtime       = local.lambda_runtime               // Set the runtime to Python 3.12
   handler       = "lambda_clear_cart.lambda_handler" // Set the handler to lambda_handler
+  timeout       = local.lambda_timeout               // Set the timeout to 30 seconds
+  memory_size   = local.lambda_memory_size
+}
+
+resource "aws_lambda_function" "checkout" { // Create a Lambda function for the home page
+  function_name = "checkout"
+  filename      = "../lambdas/lambda_checkout.zip" // Set the filename to the Lambda function zip file
+  role          = aws_iam_role.iam_for_lambda.arn
+  runtime       = local.lambda_runtime               // Set the runtime to Python 3.12
+  handler       = "lambda_checkout.lambda_handler" // Set the handler to lambda_handler
+  timeout       = local.lambda_timeout               // Set the timeout to 30 seconds
+  memory_size   = local.lambda_memory_size
+}
+
+resource "aws_lambda_function" "get_orders" { // Create a Lambda function for the home page
+  function_name = "get_orders"
+  filename      = "../lambdas/lambda_get_orders.zip" // Set the filename to the Lambda function zip file
+  role          = aws_iam_role.iam_for_lambda.arn
+  runtime       = local.lambda_runtime               // Set the runtime to Python 3.12
+  handler       = "lambda_get_orders.lambda_handler" // Set the handler to lambda_handler
   timeout       = local.lambda_timeout               // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }

@@ -64,7 +64,7 @@
         };
 
         try {
-            const response = await fetch(fullApiUrl, {
+            const response = await fetch(`${fullApiUrl}?operation=register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import axios from 'axios';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCDVLpCzDVNuDgjaQ3GMbjcwYtSZprxNdI",
@@ -9,11 +10,18 @@ const firebaseConfig = {
     messagingSenderId: "969831689978",
     appId: "1:969831689978:web:1d68182bc558765be86343"
   };
-  
-  
+
+const apiURL = 'https://api.nknez.tech';
+const api = axios.create({
+    baseURL: apiURL,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
+});
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const apiURL = 'https://api.nknez.tech';
+export { apiURL, api };
 
 export default app;

@@ -2,17 +2,19 @@
     import { useRoute } from 'vue-router';
     import { ref, onMounted } from 'vue';
     import { auth, apiURL } from '../config.js';
-    import { useToast } from "vue-toastification"
+    import { useToast } from "vue-toastification";
+    import { useProductsStore } from '@/stores/productsStore';
     import LoadingSpinner from './LoadingSpinner.vue';
 
-    const fullApiUrl = apiURL + '/loadProducts';
+    const productsStore = useProductsStore();
     const route = useRoute();
-    const id = route.params.id;
-    const product = ref({});
+    const product = ref(null);
+    const loading = ref(true);
+
     const sizes = ref([]);
     const selectedSize = ref(null);
     const toast = useToast();
-    const loading = ref(true);
+    
     const addingToCart = ref(false);
 
 
@@ -21,24 +23,14 @@
         console.log(`Selected size: ${selectedSize.value}`);
     };
 
-    async function fetchProducts() {
-        try {
-            const response = await fetch(`${fullApiUrl}?product_id=${id}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-
-            const data = await response.json();
-            product.value = data[0]; // Assume response is an array
-
-            sizeGenerator(product.value.productTag);
-        } catch (error) {
-            console.error('Error:', error);
-        } finally {
-            loading.value = false;
-        }
+    async function getProduct() {
+        loading.value = true;
+        const id = route.params.id;
+        await productsStore.fetchProductById(id);
+        product.value = productsStore.getSelectedProduct;
+        console.log('Product:', product.value);
+        sizeGenerator(product.value.productTag);
+        loading.value = false;
     }
 
     function sizeGenerator(tag) {
@@ -104,7 +96,7 @@
     }
 
     onMounted(() => {
-        fetchProducts();
+        getProduct();
     });
 </script>
 
