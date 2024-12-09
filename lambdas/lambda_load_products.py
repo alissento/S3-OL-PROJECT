@@ -27,10 +27,10 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
 
         productResponse = []
 
-        if operation_bool:
+        if operation_bool: # If the operation boolean is true, return the product as a single item
             product = products
             productResponse = response_creation(product)
-        else:
+        else: # If the operation boolean is false, return the products as a list
             for product in products: # Iterate through the kits, get the most important data and append it to the products list
                 productResponse += response_creation(product)
         
@@ -53,7 +53,7 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
             'body': json.dumps({'error': str(e)}) # Return an error message as JSON
         }
  
-def response_creation(product):
+def response_creation(product): # Function to create the response for the products
     productResponse = []
 
     product_id = product['product_id']
