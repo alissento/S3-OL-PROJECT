@@ -12,7 +12,7 @@ resource "aws_apigatewayv2_api" "api_gw_http_fb4u" { // Create an API Gateway
   depends_on = [aws_s3_bucket_website_configuration.website_s3b]
 }
 
-resource "aws_acm_certificate" "tls-cert-api" { // Create a certificate for the API Gateway
+resource "aws_acm_certificate" "tls_cert_api" { // Create a certificate for the API Gateway
   domain_name       = local.api_domain_name
   validation_method = "DNS"
 
@@ -21,19 +21,49 @@ resource "aws_acm_certificate" "tls-cert-api" { // Create a certificate for the 
   }
 }
 
+resource "aws_route53_record" "tls_cert_api_validation_cname" {
+  for_each = {
+    for dvo in aws_acm_certificate.tls_cert_api.domain_validation_options :
+    dvo.domain_name => {
+      name  = dvo.resource_record_name
+      type  = dvo.resource_record_type
+      value = dvo.resource_record_value
+    }
+  }
+
+  zone_id = local.route53_id
+  name    = each.value.name
+  type    = each.value.type
+  ttl     = 300
+  records = [each.value.value]
+
+  depends_on = [aws_acm_certificate.tls_cert_api]
+}
+
+resource "aws_acm_certificate_validation" "tls_cert_api_validation" {
+  certificate_arn         = aws_acm_certificate.tls_cert_api.arn
+  validation_record_fqdns = [for record in aws_route53_record.tls_cert_api_validation_cname: record.fqdn]
+
+  depends_on = [ aws_acm_certificate.tls_cert_api ]
+}
+
 resource "aws_apigatewayv2_domain_name" "custom_domain_api_gw" {
   domain_name = local.api_domain_name
   domain_name_configuration {
-    certificate_arn = aws_acm_certificate.tls-cert-api.arn
+    certificate_arn = aws_acm_certificate.tls_cert_api.arn
     endpoint_type   = "REGIONAL"
     security_policy = "TLS_1_2"
   }
+
+  depends_on = [ aws_acm_certificate_validation.tls_cert_api_validation ]
 }
 
 resource "aws_apigatewayv2_api_mapping" "api_mapping" {
   api_id      = aws_apigatewayv2_api.api_gw_http_fb4u.id
   domain_name = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name
   stage       = aws_apigatewayv2_stage.default_stage.name
+
+  depends_on = [ aws_acm_certificate_validation.tls_cert_api_validation ]
 }
 
 resource "aws_route53_record" "custom_domain_api_gw_record" {

@@ -73,6 +73,8 @@ def lambda_handler(event, context):
         tableOrders.put_item(Item=order_data)
         tableCart.delete_item(Key={'user_id': user_id})
 
+        send_email(order_data)
+
         return {
             'statusCode': 200,
             'headers': {
@@ -93,3 +95,49 @@ def lambda_handler(event, context):
             },
             'body': json.dumps({'error': str(e)})
         }
+
+def send_email(order_data):
+    dynamodb = boto3.resource('dynamodb')
+    tableUser = dynamodb.Table('fb4u_users')
+    ses = boto3.client('ses')
+
+    try:
+        userData = tableUser.get_item(Key={'user_id': order_data['user_id']})
+        clientEmail = userData['Item']['email']
+
+        sender_email = "knez.norbert@gmail.com"
+        subject = f"Order Confirmation - {order_data['order_id']}"
+        
+        body = f"""
+        Dear {userData['Item']['first_name']},
+
+        Thank you for your order! Your order has been placed successfully.
+        Here are the details of your order:
+
+        Order ID: {order_data['order_id']}
+        Order Date: {order_data['order_hour']} | {order_data['order_date']}
+        Items: {", ".join([item['product_id'] for item in order_data['items']])}
+        Total Price: {order_data['total_price']}
+        Delivery Address: {order_data['street']}, {order_data['post_code']}, {order_data['city']}, {order_data['country']}
+
+        If you have any questions or concerns, please feel free to contact us at {sender_email}.
+
+        Best regards,
+        FB4U Team
+        """
+
+        email_sending = ses.send_email(
+            Source=sender_email,
+            Destination={'ToAddresses': [clientEmail]},
+            Message={
+                'Subject': {'Data': subject},
+                'Body': {'Text': {'Data': body}}
+            }
+        )
+
+        print(email_sending)
+        print(f"Email sent to {clientEmail} successfully.")
+
+    except Exception as e:
+        print(f"Error sending email: {str(e)}")
+        return False

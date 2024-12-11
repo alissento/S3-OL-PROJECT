@@ -1,3 +1,13 @@
+<script setup>
+    import { useToast } from "vue-toastification";
+
+    const toast = useToast();
+
+    async function wishlist() {
+        toast.info('Wishlist function is currently unavailable');
+    }
+</script>
+
 <template>
 <header class="bg-black text-white flex justify-between items-center font-karantina">
     <div id="logo" class="flex items-center">
@@ -21,7 +31,8 @@
   </nav>
   <div class="flex items-center">
     <RouterLink to="/login"><img id="user_icon" src="/images/user_icon.png" class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="User"></RouterLink>
+    <img id="heart_icon" src="/images/heart_icon.png" class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="Wishlist" @click="wishlist()">
     <RouterLink to="/cart"><img id="cart_icon" src="/images/shopping_cart_icon.png" class="w-8 sm:w-12 md:w-16 h-auto m-2.5 hover:brightness-50 transition-all duration-200 cursor-pointer" alt="Cart"></RouterLink>
-  </div>
+</div>
 </header>
 </template>

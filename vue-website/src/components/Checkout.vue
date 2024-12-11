@@ -52,7 +52,7 @@
             toast.success('Payment successful!');
             await ordersStore.fetchOrders(userId, true);
             await cartStore.clearCart();
-            router.push('/my-orders');
+            router.push('/order-confirmation');
         } catch (error) {
             console.error('Error:', error);
         }

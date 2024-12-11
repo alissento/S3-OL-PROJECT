@@ -26,7 +26,13 @@ resource "aws_iam_policy" "lambda_policy" { // Create a policy for the Lambda fu
           "dynamodb:DeleteItem"
         ],
         "Effect" : "Allow",
-        "Resource" : [aws_dynamodb_table.fb4u_products.arn, "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", aws_dynamodb_table.fb4u_ads.arn, aws_dynamodb_table.fb4u_users.arn, aws_dynamodb_table.fb4u_cart.arn, aws_dynamodb_table.fb4u_orders.arn, "${aws_dynamodb_table.fb4u_orders.arn}/index/fb4u_user_orders"]
+        "Resource" : [ 
+          aws_dynamodb_table.fb4u_products.arn, 
+          "${aws_dynamodb_table.fb4u_products.arn}/index/fb4u_tag", 
+          aws_dynamodb_table.fb4u_ads.arn, aws_dynamodb_table.fb4u_users.arn, 
+          aws_dynamodb_table.fb4u_cart.arn, aws_dynamodb_table.fb4u_orders.arn, 
+          "${aws_dynamodb_table.fb4u_orders.arn}/index/fb4u_user_orders"
+          ]
       },
       {
         "Action" : [ // Allow the Lambda function to write logs
@@ -36,6 +42,14 @@ resource "aws_iam_policy" "lambda_policy" { // Create a policy for the Lambda fu
         ],
         "Effect" : "Allow",
         "Resource" : "arn:aws:logs:*:*:*"
+      },
+      {
+        "Action" : [
+          "ses:SendEmail",
+          "ses:SendRawEmail"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "arn:aws:ses:*:*:identity/*"
       }
     ]
   })

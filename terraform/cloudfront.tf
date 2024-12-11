@@ -40,7 +40,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" { // Define the CloudFr
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  depends_on = [aws_acm_certificate.tls-cert]
+  depends_on = [ aws_acm_certificate_validation.tls_cert_validation ]
 }
 
 resource "aws_acm_certificate" "tls-cert" { // Define the ACM certificate for the CloudFront distribution 
@@ -54,6 +54,35 @@ resource "aws_acm_certificate" "tls-cert" { // Define the ACM certificate for th
   }
 }
 
+resource "aws_route53_record" "tls_cert_validation_cname" {
+  provider = aws.us-east-1
+
+  for_each = {
+    for dvo in aws_acm_certificate.tls-cert.domain_validation_options :
+    dvo.domain_name => {
+      name  = dvo.resource_record_name
+      type  = dvo.resource_record_type
+      value = dvo.resource_record_value
+    }
+  }
+
+  zone_id = local.route53_id
+  name    = each.value.name
+  type    = each.value.type
+  ttl     = 300
+  records = [each.value.value]
+
+  depends_on = [aws_acm_certificate.tls-cert]
+}
+
+resource "aws_acm_certificate_validation" "tls_cert_validation" {
+  provider                = aws.us-east-1
+  certificate_arn         = aws_acm_certificate.tls-cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.tls_cert_validation_cname : record.fqdn]
+
+  depends_on = [ aws_acm_certificate.tls-cert ]
+}
+
 resource "aws_route53_record" "record_for_cloudfront" { // Define the Route 53 record for the CloudFront distribution
   zone_id = local.route53_id
   name    = local.domain_name
@@ -65,10 +94,3 @@ resource "aws_route53_record" "record_for_cloudfront" { // Define the Route 53 r
     evaluate_target_health = false
   }
 }
-
-
-/*
-  TODO:
-  maybe route53 hosted zone should be created in terraform instead of hardcoded
-  add automatic cname validation for acm
- */

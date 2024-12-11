@@ -11,6 +11,7 @@ import ChangeDetails from '@/components/ChangeDetails.vue';
 import Checkout from '@/components/Checkout.vue';
 import MyOrders from '@/components/MyOrders.vue';
 import OrderPage from '@/components/OrderPage.vue';
+import OrderConfirmation from '@/components/OrderConfirmation.vue';
 
 const routes = [
     { path: '/', component: HomePage, meta: { title: 'Football For You' } },
@@ -25,6 +26,7 @@ const routes = [
     { path: '/checkout', component: Checkout, meta: { title: 'Checkout' } },
     { path: '/my-orders', component: MyOrders, meta: { title: 'My Orders' } },
     { path: '/order/:id', name: "orderPage", component: OrderPage, props: true, meta: { title: 'Order Details' } },
+    { path: '/order-confirmation', component: OrderConfirmation, meta: { title: 'Thank you!' } },
 ];
   
 const router = createRouter({
