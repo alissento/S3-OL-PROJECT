@@ -35,17 +35,17 @@
         <div
             v-for='product in products' 
             :key='product.product_id' 
-            class='flex flex-col items-center text-center m-5'
+            class="p-4 m-6 border rounded-lg shadow-md hover:shadow-lg transition cursor-pointer bg-white flex flex-col items-center"
         >
             <RouterLink :to="{ name: 'productPage', params: { id: product.product_id } }">
             <img 
                 :src="'/images/'+product.photoID" 
                 :alt='product.productLabel' 
-                class='h-64 w-56 mb-2.5 rounded-[10%] border-2 border-black cursor-pointer'
+                class='h-64 w-56 object-cover mb-4 cursor-pointer'
             >
             </RouterLink>
-            <p class='text-[22px] font-bold text-center'>{{ product.productLabel }}</p>
-            <p class='text-3xl font-bold text-center'>{{ product.price }}€</p>
+            <p class='text-[22px] font-semibold text-center'>{{ product.productLabel }}</p>
+            <p class='text-3xl font-semibold text-center'>{{ product.price }}€</p>
         </div>
     </main>
 </template>

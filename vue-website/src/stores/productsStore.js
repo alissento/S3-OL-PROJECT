@@ -39,6 +39,7 @@ export const useProductsStore = defineStore('products', {
                 });
     
                 this.selectedProduct = response.data;
+                console.log(this.selectedProduct);
 
             } catch (error) {
                 console.error(error);

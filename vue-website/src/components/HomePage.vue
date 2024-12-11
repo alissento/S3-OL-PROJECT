@@ -34,7 +34,7 @@
             <img 
                 :src="'images/'+ad.ad_photo" 
                 :alt='ad.ad_label' 
-                class='w-full max-w-[26rem] mb-2.5 rounded-[10%] border-[2.5px] border-black cursor-pointer'
+                class='w-full max-w-[26rem] mb-2.5 rounded-[8%] border-[2.5px] border-black cursor-pointer'
             >
             <p class='text-xl lg:text-2xl xl:text-3xl font-medium text-center'>{{ ad.ad_label }}</p>
             </RouterLink>

@@ -11,6 +11,7 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
         print(f"Body: {body}")
         user_id = body['user_id']
         product_id = body['product_id']
+        price = body['price']
         size = body['size']
 
         try:
@@ -25,6 +26,7 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
                 
                 cart['items'].append({
                     'product_id': product_id,
+                    'price': price,
                     'size': size
                 })
                 
@@ -35,6 +37,7 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
                     'user_id': user_id,
                     'items': [{
                         'product_id': product_id,
+                        'price': price,
                         'size': size
                     }]
                 })

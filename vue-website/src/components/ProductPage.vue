@@ -5,7 +5,9 @@
     import { useToast } from "vue-toastification";
     import { useProductsStore } from '@/stores/productsStore';
     import LoadingSpinner from './LoadingSpinner.vue';
+    import { useCartStore } from '@/stores/cartStore.js';
 
+    const cartStore = useCartStore();
     const productsStore = useProductsStore();
     const route = useRoute();
     const product = ref(null);
@@ -19,7 +21,7 @@
 
 
     const selectSize = (size) => {
-        selectedSize.value = size; // Correctly set the selected size
+        selectedSize.value = size;
         console.log(`Selected size: ${selectedSize.value}`);
     };
 
@@ -29,6 +31,11 @@
         await productsStore.fetchProductById(id);
         product.value = productsStore.getSelectedProduct;
         console.log('Product:', product.value);
+
+        if (Array.isArray(product.value)) {
+            product.value = product.value[0];
+        }
+
         sizeGenerator(product.value.productTag);
         loading.value = false;
     }
@@ -42,13 +49,30 @@
             for (let size = 36; size <= 46; size += 0.5) {
                 sizes.value.push(size.toString());
             }
+        } else if (tag === 'accessories') {
+            console.log(product.value.productType);
+            if (product.value.productType === 'beanie' || product.value.productType === 'cap') {
+                sizes.value = ['XXS/XS', 'XS/S', 'M/L', 'L/XL'];
+            } else if (product.value.productType === 'ball') {
+                sizes.value = ['3', '4', '5'];
+            } else {
+                sizes.value = ['One Size'];
+                selectedSize.value = 'One Size';
+            }
+        } else {
+            sizes.value = [];
         }
     }
 
     async function addToCart() {
-        
+        loading.value = true;
+        if ((product.value.productTag === 'accessories') && (product.value.productType !== 'beanie' && product.value.productType !== 'cap' && product.value.productType !== 'ball')) {
+            selectedSize.value = 'One Size';
+        }
+
         if (!selectedSize.value) {
             toast.error("Please select a size");
+            loading.value = false;
             return;
         }
 
@@ -58,6 +82,7 @@
 
         if (!user) {
             toast.error("You must be logged in to add items to cart");
+            loading.value = false;
             return;
         }
 
@@ -67,6 +92,7 @@
         const requestData = {
             user_id: user.uid,
             product_id: product.value.product_id,
+            price: product.value.price,
             size: selectedSize.value
         };
 
@@ -92,6 +118,8 @@
             toast.error("Failed to add item to cart");
         } finally {
             addingToCart.value = false;
+            loading.value = false;
+            await cartStore.fetchCart(user.uid, true);
         }
     }
 
@@ -107,7 +135,7 @@
             <img 
                 :src="'/images/' + product.photoID" 
                 :alt="product.productLabel" 
-                class="h-[95%] w-[85%] rounded-[10%] border-[3px] border-black" 
+                class="h-[95%] w-[85%] rounded-xl border-[1px] border-black" 
             />
         </div>
         <div class="flex flex-col w-[50%] items-center text-center m-11 mr-[12%]">

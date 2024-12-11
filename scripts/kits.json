@@ -178,13 +178,5 @@
     "price": 90,
     "tag": "kits",
     "description": "PSV's 24/25 third kit brings a unique design for fans who want to stand out from the crowd."
-  },
-  {
-    "product_id": "100",
-    "brand": "Adidas",
-    "label": "F50 Pro FG",
-    "price": 200,
-    "tag": "boots",
-    "description": "Take your game to the next level with Adidas F50 Pro FG boots, engineered for speed and accuracy."
   }
 ]

@@ -4,7 +4,9 @@
     import { useToast } from "vue-toastification";
     import router from '@/router/index.js';
     import LoadingSpinner from './LoadingSpinner.vue';
+    import { useCartStore } from '@/stores/cartStore';
     
+    const cartStore = useCartStore();
     const toast = useToast();
     const cartItems = ref([]);
     const totalPrice = ref(0);
@@ -12,7 +14,6 @@
 
     async function getUserCart() {
         const user = auth.currentUser;
-        const fullApiUrl = apiURL+'/loadCart';
 
         if (!user) {
             console.error('User not logged in');
@@ -24,14 +25,9 @@
         const userId = user.uid;
 
         try {
-            const response = await fetch(`${fullApiUrl}?user_id=${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                }
-            });
+            await cartStore.fetchCart(userId, false);
+            const data = cartStore.getCart;
 
-            const data = await response.json();
             console.log('Data:', data);
 
             cartItems.value = data;
@@ -41,7 +37,8 @@
                 router.back();
             }
 
-            calculateTotalPrice();
+            await cartStore.calculateTotalPrice();
+            totalPrice.value = cartStore.getTotalPrice;
 
         } catch (error) {
             console.error('Error:', error);
@@ -53,10 +50,6 @@
         
     }
 
-    async function calculateTotalPrice() {
-        totalPrice.value = cartItems.value.reduce((acc, item) => acc + item.price, 0);
-        console.log('Total price:', totalPrice.value);
-    }
 
     async function clearCart() {
         const user = auth.currentUser;
@@ -81,6 +74,7 @@
             }
 
             toast.success('Cart cleared successfully');
+            await cartStore.fetchCart(userId, true);
             router.push('/');
 
         } catch (error) {
@@ -104,7 +98,7 @@
                 <p class="text-2xl">{{ cartItem.price }}€</p>
             </div>
         </div>
-        <p class="text-3xl font-bold mt-8">Total Price: {{ totalPrice }}€</p>
+        <p class="text-4xl mt-8">Total Price: {{ totalPrice }}€</p>
         <RouterLink to='/checkout' class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3 flex items-center justify-center">Checkout</RouterLink>
         <button class="w-96 h-12 text-2xl border-2 border-black rounded-lg cursor-pointer mt-3" @click="clearCart">Clear Cart</button>
     </div>

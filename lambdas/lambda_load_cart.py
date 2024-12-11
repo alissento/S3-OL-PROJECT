@@ -50,7 +50,10 @@ def lambda_handler(event, context): # Lambda handler function, called when the L
                 brand = responseProducts['brand']
                 label = responseProducts['label']
                 productLabel = f"{brand} {label}"
-            
+            elif productTag == 'accessories':
+                label = responseProducts['label']
+                productLabel = label
+                
             price = responseProducts['price']
             photoID = f"{product_id}.png"
 

@@ -68,6 +68,9 @@ def response_creation(product): # Function to create the response for the produc
         brand = product['brand']
         label = product['label']
         productLabel = f"{brand} {label}"
+    elif productTag == 'accessories':
+        label = product['label']
+        productLabel = label
             
     price = product['price']
     photoID = f"{product_id}.png"
@@ -79,7 +82,8 @@ def response_creation(product): # Function to create the response for the produc
         'photoID': photoID,
         'product_id': product_id,
         'productDescription': productDescription,
-        'productTag': productTag
+        'productTag': productTag,
+        'productType': product.get('type', '')
     })
 
     print(productResponse)

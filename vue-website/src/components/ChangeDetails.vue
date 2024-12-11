@@ -1,10 +1,12 @@
 <script setup>
     import { ref } from 'vue';
-    import { auth } from '@/config';
     import { useToast } from "vue-toastification";
     import router from '@/router/index.js';
-    import { apiURL } from '@/config';
+    import { apiURL, auth } from '@/config';
+    import { onMounted } from 'vue';
+    import { useUserStore } from '@/stores/userStore.js';
 
+    const userStore = useUserStore();
     const toast = useToast();
     const firstName = ref('');
     const lastName = ref('');
@@ -45,11 +47,37 @@
 
             console.log('Data stored successfully');
             toast.success('Details updated successfully');
+            await userStore.clearUserData();
+            await userStore.fetchUserData(user.uid);
             router.push('/user');
         } catch (error) {
             console.error('Error:', error);
         }
     }
+
+    async function populateInputs() {
+        const user = auth.currentUser;
+
+        if (!user) {
+            console.error('User not logged in');
+            return;
+        }
+
+        await userStore.fetchUserData(user.uid);
+        const data = userStore.getUserData;
+
+        if (data.first_name) firstName.value = data.first_name;
+        if (data.last_name) lastName.value = data.last_name;
+        if (data.street) street.value = data.street;
+        if (data.post_code) postCode.value = data.post_code;
+        if (data.city) city.value = data.city;
+        if (data.country) country.value = data.country;
+        if (data.phone_number) phoneNumber.value = data.phone_number;
+    }
+
+    onMounted(() => {
+        populateInputs();
+    });
 </script>
 
 <template>

@@ -3,8 +3,11 @@
     import { api, auth } from '@/config';
     import { useToast } from "vue-toastification";
     import router from '@/router';
+    import LoadingSpinner from './LoadingSpinner.vue';
+    import { useOrdersStore } from '@/stores/ordersStore';
     
     const toast = useToast();
+    const ordersStore = useOrdersStore();
     const orders = ref([]);
     const loading = ref(true);
 
@@ -16,11 +19,12 @@
         }
 
         const userId = user.uid;
+        
         try {
-            const response = await api.get(`/getOrders?user_id=${userId}`);
+            loading.value = true;
 
-            const data = await response.data;
-            console.log('Data:', data);
+            await ordersStore.fetchOrders(userId);
+            const data = ordersStore.getOrders;
 
             if (data.length === 0) {
                 toast.info('You have no orders');
@@ -29,6 +33,8 @@
             }
 
             orders.value = data;
+
+            console.log(orders.value[0].order_id);
 
         } catch (error) {
             console.error('Error:', error);
@@ -43,7 +49,8 @@
 </script>
 
 <template>
-    <main class="flex flex-col items-center text-center m-11">
+    <LoadingSpinner v-if="loading" />
+    <main v-else class="flex flex-col items-center text-center m-11">
         <h1 class="text-5xl font-bold text-center mb-8">My Orders</h1>
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 w-full">
             <div 
@@ -53,12 +60,13 @@
             >
                 <h2 class="font-bold">Order #{{ order.order_id }}</h2>
                 <p><strong>Date:</strong> {{ order.order_date }}</p>
-                <p><strong>Status:</strong> {{ order.order_status }}</p>
-                <button 
-                    class="mt-3 bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 transition"
+                <p class="mb-2"><strong>Status:</strong> {{ order.order_status }}</p>
+                <RouterLink 
+                    :to="{ name: 'orderPage', params: { id: order.order_id } }"
+                    class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 transition"
                 >
                     View Details
-                </button>
+                </RouterLink>
             </div>
         </div>
     </main>

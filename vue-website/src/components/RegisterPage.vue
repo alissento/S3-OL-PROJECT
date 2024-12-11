@@ -6,7 +6,9 @@
     import router from '@/router/index.js';
     import { onMounted } from 'vue';
     import loginCheck from '@/logincheck';
+    import { useUserStore } from '@/stores/userStore.js';
 
+    const userStore = useUserStore();
     const toast = useToast();
     const firstName = ref('');
     const lastName = ref('');
@@ -41,6 +43,7 @@
             toast.success('Successfully registered');
             
             storeUserData();
+            userStore.fetchUserData(user.uid);
             router.push('/login');
             
         } catch (error) {

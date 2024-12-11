@@ -1,0 +1,90 @@
+[
+      {
+        "product_id": "100",
+        "brand": "Adidas",
+        "label": "F50 Pro FG",
+        "price": 200,
+        "tag": "boots",
+        "description": "Take your game to the next level with Adidas F50 Pro FG boots, engineered for speed and accuracy."
+      },
+      {
+        "product_id": "101",
+        "brand": "Nike",
+        "label": "Mercurial Superfly 10 Elite",
+        "price": 270,
+        "tag": "boots",
+        "description": "Chasing speed? So are the pros. The Elite boot features a 3/4-length Air Zoom unit for explosive propulsion, making this the most responsive Mercurial yet, built for greatness like you."
+      },
+      {
+        "product_id": "102",
+        "brand": "Nike",
+        "label": "Mercurial Superfly 10 Academy",
+        "price": 100,
+        "tag": "boots",
+        "description": "Ready to elevate your speed? The Academy boots feature a heel Air Zoom unit for explosive propulsion and Anti-Clog traction to keep mud off the soleplate. This is the most responsive Mercurial yet, built to dominate pace and tempo all game."
+      },
+      {
+        "product_id": "103",
+        "brand": "Nike",
+        "label": "Tiempo Legend 10 Academy",
+        "price": 85,
+        "tag": "boots",
+        "description": "Even Legends evolve. The latest Academy boot features FlyTouch Lite leather, softer and lighter than natural leather, for a perfect fit that won't overstretch. Sleeker than ever, the Legend 10 lets you control the game from every position, whether delivering pinpoint passes or stopping breakaways."
+      },
+      {
+        "product_id": "104",
+        "brand": "Nike",
+        "label": "Phantom GX 2 Elite",
+        "price": 270,
+        "tag": "boots",
+        "description": "Obsessed with mastery? The Phantom GX 2 Elite is built for your unmatched control and agility. Nike Gripknit enhances precision in the striking area, while Cyclone 360 traction supports your unpredictable moves. With Anti-Clog Traction to keep mud off, this boot is designed for greatness, just like you."
+      },
+      {
+        "product_id": "105",
+        "brand": "Nike",
+        "label": "Tiempo Legend 10 Club",
+        "price": 55,
+        "tag": "boots",
+        "description": "Even Legends evolve. Perfect for beginners or casual players, the latest Tiempo Legend 10 Club combines quality with comfort. The synthetic leather contours to your foot for precise control without overstretching. Sleeker and lighter than ever, its built for any position, whether delivering pinpoint passes or defending against breakaways."
+      },
+      {
+        "product_id": "106",
+        "brand": "Adidas",
+        "label": "Predator Elite",
+        "price": 300,
+        "tag": "boots",
+        "description": "Step onto the pitch ready to dominate with adidas Predator Elite boots, engineered for precision and power. The HybridTouch upper with Strikeskin rubber fins delivers exceptional ball control, while the foldable tongue adds versatility. A Controlframe 2.0 outsole and adidas PRIMEKNIT collar provide unmatched stability, letting you focus on scoring every match."
+      },
+      {
+        "product_id": "107",
+        "brand": "Adidas",
+        "label": "Predator Elite Bellingham",
+        "price": 280,
+        "tag": "boots",
+        "description": "Score like a pro with the limited-edition adidas Predator Elite boots, inspired by Jude Bellingham. Featuring a HybridTouch 2.0 upper and PRIMEKNIT collar for stability, these boots combine a classic fold-over tongue with Strikeskin fins for Real Madrid-level shooting precision."
+      },
+      {
+        "product_id": "108",
+        "brand": "Puma",
+        "label": "Future 7 Ultimate",
+        "price": 260,
+        "tag": "boots",
+        "description": "Step into the FUTURE. These boots feature a redesigned upper with PWRPRINT and PWRTAPE for a secure, adaptive fit, while the flexible knit and soft double mesh deliver unmatched comfort. Dynamic Motion System technology ensures superior grip and agility for quick cuts and bursts of speed. Wear the FUTURE. Be the FUTURE. Start creating it."
+      },
+      {
+        "product_id": "109",
+        "brand": "Puma",
+        "label": "Ultra 5 Ultimate F1",
+        "price": 240,
+        "tag": "boots",
+        "description": "The ULTRA 5 ULTIMATE F1 boots combine football and motorsport for unmatched speed and performance. Inspired by F1 engines, they feature vibrant graphics and a SPEEDSYSTEM outsole for explosive acceleration. FastTrax studs ensure optimal grip, while PWRTAPE SQD keeps your foot stable without sacrificing agility."
+      },
+      {
+        "product_id": "110",
+        "brand": "New Balance",
+        "label": "Tekela V4 Pro",
+        "price": 210,
+        "tag": "boots",
+        "description": "Experience the Tekela V4 Pro FG. Designed for elite players, these boots feature a laceless knit upper for a secure fit and unmatched ball control. A lightweight nylon outsole with multi-directional TPU studs ensures quick turns and optimal performance on firm ground."
+      }
+]

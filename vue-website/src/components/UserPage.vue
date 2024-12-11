@@ -1,12 +1,18 @@
 <script setup>
     import { onMounted } from 'vue';
-    import { apiURL, auth } from '@/config';
+    import { auth } from '@/config';
     import { signOut } from 'firebase/auth';
     import { ref } from 'vue';
     import { useToast } from "vue-toastification";
     import router from '@/router/index.js';
     import LoadingSpinner from './LoadingSpinner.vue';
-    
+    import { useUserStore } from '@/stores/userStore.js';
+    import { useCartStore } from '@/stores/cartStore';
+    import { useOrdersStore } from '@/stores/ordersStore';
+
+    const cartStore = useCartStore();
+    const ordersStore = useOrdersStore();
+    const userStore = useUserStore();
     const toast = useToast();
     const firstName = ref('');
     const lastName = ref('');
@@ -26,17 +32,11 @@
         }
 
         const userId = user.uid;
-        const fullApiUrl = apiURL + '/getUserData';
 
         try {
-            const response = await fetch(`${fullApiUrl}?user_id=${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                }
-            });
-
-            const data = await response.json();
+            loading.value = true;
+            await userStore.fetchUserData(userId);
+            const data = userStore.getUserData;
             console.log('Data:', data);
 
             if (data.first_name) firstName.value = data.first_name;
@@ -59,6 +59,9 @@
         try {
             await signOut(auth);
             toast.success('Successfully signed out');
+            await userStore.clearUserData();
+            await cartStore.clearCart();
+            await ordersStore.clearOrders();
             router.push('/login');
         } catch (error) {
             console.error('Error:', error);

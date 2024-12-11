@@ -12,6 +12,11 @@ def lambda_handler(event, context):
     try:
         body = json.loads(event['body'])
         user_id = body.get('user_id')
+        street = body.get('street')
+        post_code = body.get('post_code')
+        city = body.get('city')
+        country = body.get('country')
+        phone = body.get('phone_number')
 
         try:
             responseCart = tableCart.get_item(Key={'user_id': user_id})
@@ -30,16 +35,23 @@ def lambda_handler(event, context):
             }
 
         order_id = str(uuid.uuid4())
-        order_date = datetime.now().strftime('%d-%m-%Y') 
+        order_date = datetime.now().strftime('%d-%m-%Y')
+        order_hour = datetime.now().strftime('%H:%M') 
         order_status = 'Pending'
 
         order_items = []
+        total_price = 0
+
         for product in cartData['items']:
             product_id = product['product_id']
             size = product['size']
+            price = product['price']
+
+            total_price += price
 
             order_items.append({
                 'product_id': product_id,
+                'price': price,
                 'size': size
             })
 
@@ -48,7 +60,14 @@ def lambda_handler(event, context):
             'user_id': user_id,
             'items': order_items,
             'order_date': order_date,
-            'order_status': order_status
+            'order_hour': order_hour,
+            'order_status': order_status,
+            'total_price': total_price,
+            'street': street,
+            'post_code': post_code,
+            'city': city,
+            'country': country,
+            'phone_number': phone
         }
 
         tableOrders.put_item(Item=order_data)

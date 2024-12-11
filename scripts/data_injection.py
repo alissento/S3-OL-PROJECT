@@ -3,6 +3,7 @@ from botocore.exceptions import ClientError
 
 dynamodb = boto3.resource('dynamodb')
 
+
 def load_data(json_file, tableName, key_attribute):
     table = dynamodb.Table(tableName)
     with open(json_file) as file:
@@ -21,6 +22,7 @@ def load_data(json_file, tableName, key_attribute):
             else:
                 raise
 
-    
-load_data('data.json', 'fb4u_products', 'product_id')
+load_data('kits.json', 'fb4u_products', 'product_id')
+load_data('boots.json', 'fb4u_products', 'product_id')
+load_data('accessories.json', 'fb4u_products', 'product_id')
 load_data('ads.json', 'fb4u_ads', 'ad_id')
