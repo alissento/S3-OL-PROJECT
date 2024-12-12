@@ -43,7 +43,7 @@
             toast.success('Successfully registered');
             
             storeUserData();
-            userStore.fetchUserData(user.uid);
+            await userStore.fetchUserData(user.uid);
             router.push('/login');
             
         } catch (error) {
