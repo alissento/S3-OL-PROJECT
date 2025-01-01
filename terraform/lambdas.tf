@@ -69,9 +69,9 @@ resource "aws_lambda_function" "list_products" { // Create a Lambda function for
   function_name = "load_products"
   filename      = "../lambdas/load_products.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime                  // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime           // Set the runtime to Python 3.12
   handler       = "load_products.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout                  // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout           // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 
@@ -79,9 +79,9 @@ resource "aws_lambda_function" "list_home_page" { // Create a Lambda function fo
   function_name = "home_page"
   filename      = "../lambdas/home_page.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime              // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime       // Set the runtime to Python 3.12
   handler       = "home_page.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout              // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout       // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 
@@ -89,9 +89,9 @@ resource "aws_lambda_function" "store_user_data" { // Create a Lambda function f
   function_name = "store_user_data"
   filename      = "../lambdas/store_user_data.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime                    // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime             // Set the runtime to Python 3.12
   handler       = "store_user_data.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout                    // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout             // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 
@@ -99,9 +99,9 @@ resource "aws_lambda_function" "get_user_data" { // Create a Lambda function for
   function_name = "get_user_data"
   filename      = "../lambdas/get_user_data.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime                  // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime           // Set the runtime to Python 3.12
   handler       = "get_user_data.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout                  // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout           // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 
@@ -109,16 +109,16 @@ resource "aws_lambda_function" "add_to_cart" { // Create a Lambda function for t
   function_name = "add_to_cart"
   filename      = "../lambdas/add_to_cart.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime                // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime         // Set the runtime to Python 3.12
   handler       = "add_to_cart.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout                // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout         // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 resource "aws_lambda_function" "load_cart" { // Create a Lambda function for the home page
   function_name = "load_cart"
   filename      = "../lambdas/load_cart.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime              // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime       // Set the runtime to Python 3.12
   handler       = "load_cart.lambda_handler" // Set the handler to lambda_handler
   timeout       = local.lambda_timeout
   memory_size   = local.lambda_memory_size
@@ -128,9 +128,9 @@ resource "aws_lambda_function" "clear_cart" { // Create a Lambda function for th
   function_name = "clear_cart"
   filename      = "../lambdas/clear_cart.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime               // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime        // Set the runtime to Python 3.12
   handler       = "clear_cart.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout               // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout        // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 
@@ -138,9 +138,9 @@ resource "aws_lambda_function" "checkout" { // Create a Lambda function for the 
   function_name = "checkout"
   filename      = "../lambdas/checkout.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime             // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime      // Set the runtime to Python 3.12
   handler       = "checkout.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout             // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout      // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
 
@@ -148,8 +148,8 @@ resource "aws_lambda_function" "get_orders" { // Create a Lambda function for th
   function_name = "get_orders"
   filename      = "../lambdas/get_orders.zip" // Set the filename to the Lambda function zip file
   role          = aws_iam_role.iam_for_lambda.arn
-  runtime       = local.lambda_runtime               // Set the runtime to Python 3.12
+  runtime       = local.lambda_runtime        // Set the runtime to Python 3.12
   handler       = "get_orders.lambda_handler" // Set the handler to lambda_handler
-  timeout       = local.lambda_timeout               // Set the timeout to 30 seconds
+  timeout       = local.lambda_timeout        // Set the timeout to 30 seconds
   memory_size   = local.lambda_memory_size
 }
