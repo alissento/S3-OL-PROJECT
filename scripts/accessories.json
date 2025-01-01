@@ -1,0 +1,90 @@
+[
+    {
+        "product_id": "500",
+        "label": "Erling Haaland Figure",
+        "price": 16,
+        "description": "This collectible figurine of Manchester City star Erling Haaland is a must-have for fans. Expertly crafted, its perfect for collections, gifts, or display.",
+        "tag": "accessories",
+        "type": "figure"
+    },
+    {
+        "product_id": "501",
+        "label": "Mohamed Salah Figure",
+        "price": 16,
+        "description": "This collectible figurine of Liverpool star Mohamed Salah is a must-have for fans. Carefully crafted, its perfect for collections, gifts, or shelf display.",
+        "tag": "accessories",
+        "type": "figure"
+    },
+    {
+        "product_id": "502",
+        "label": "Robert Lewandowski Figure",
+        "price": 16,
+        "description": "This collectible figurine of FC Barcelona star Robert Lewandowski is a must-have for fans. Expertly crafted, its perfect for collections, gifts, or display.",
+        "tag": "accessories",
+        "type": "figure"
+    },
+    {
+        "product_id": "503",
+        "label": "Beanie Juventus 24/25",
+        "price": 25,
+        "description": "Stay warm and stylish while cheering for Juventus with this adidas beanie. Made from soft knit fabric, it ensures cozy comfort on the coldest days. Featuring an embroidered club logo on the front cuff, it's perfect for the stands or showing your team pride off the field.",
+        "tag": "accessories",
+        "type": "beanie"
+    },
+    {
+        "product_id": "504",
+        "label": "Beanie Real Madrid 24/25",
+        "price": 25,
+        "description": "Adidas beanie with the iconic Real Madrid emblem offers warmth and style for dedicated fans. Made from soft fabric with a snug fit, its perfect for training or city outings. The ribbed cuff ensures it stays in place, letting you cheer for Los Blancos in comfort.",
+        "tag": "accessories",
+        "type": "beanie"
+    },
+    {
+        "product_id": "505",
+        "label": "Scarf Lechia Gdansk",
+        "price": 12,
+        "description": "Knitted scarf that will show your affiliation with the local club. A must-have for every fan. Excellent quality of materials used, high durability and careful craftsmanship distinguish the Lechia Gdańsk scarf from the rest of the club's gadgets.",
+        "tag": "accessories",
+        "type": "scarf"
+    },
+    {
+        "product_id": "506",
+        "label": "Cap Manchester United 24/25",
+        "price": 27,
+        "description": "Show your football pride wherever you go with this adidas Manchester United baseball cap. Featuring an embroidered club crest, it highlights your loyalty in style. The soft corduroy design and adjustable strap ensure a comfortable fit.",
+        "tag": "accessories",
+        "type": "cap"
+    },
+    {
+        "product_id": "507",
+        "label": "Backpack FC Bayern 24/25",
+        "price": 36,
+        "description": "Travel in style with this adidas Bayern Munich backpack, perfect for away games or training sessions. Featuring the club crest, its built for durability and comfort with breathable mesh straps and back panel. Multiple pockets keep your gear, snacks, and headphones organized.",
+        "tag": "accessories",
+        "type": "backpack"
+    },
+    {
+        "product_id": "508",
+        "label": "Premier League Club Elite Ball",
+        "price": 65,
+        "description": "Show your support of the Premier League with your next strike. This ball's four-panel design has fewer seams to allow for larger sweet spots so that your next shot can be a brilliant finish.",
+        "tag": "accessories",
+        "type": "ball"
+    },
+    {
+        "product_id": "509",
+        "label": "Nike Strike Team Ball",
+        "price": 25,
+        "description": "The Nike Strike Team Football is light and durable to keep the weight low for young athletes. Bold graphics make it easier to see the ball across the pitch.",
+        "tag": "accessories",
+        "type": "ball"
+    },
+    {
+        "product_id": "510",
+        "label": "FC Barcelona Strike",
+        "price": 28,
+        "description": "The F.C. Barcelona Strike Football is ready to fly into the back of the net. A textured casing and stabilising grooves help you put the ball right where you want it.",
+        "tag": "accessories",
+        "type": "ball"
+    }
+]

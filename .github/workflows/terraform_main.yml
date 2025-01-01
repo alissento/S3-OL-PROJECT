@@ -1,0 +1,85 @@
+name: 'CI/CD for Terraform and data injection in the main branch'
+
+on:
+  push:
+    branches:
+      - 'main' # Pipeline will run only when code is pushed to the main branch
+    paths:
+      - 'terraform/**' # Pipeline will run only when code in the terraform and/or scripts directory is changed
+      - 'scripts/**'
+
+jobs:
+  terraform: # Terraform deployment job
+    name: 'Terraform Deployment'
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu
+
+    defaults:
+      run:
+        shell: bash # Use bash as the shell for all steps
+
+    steps:
+    - name: Checkout Code # Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform CLI # Setup Terraform CLI
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Configure AWS Credentials # Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with: # Use the AWS credentials from the secrets
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: 'eu-central-1'
+
+    - name: Terraform Init # Initialize Terraform
+      run: |
+        cd terraform
+        terraform init
+
+    - name: Terraform Format Check # Check if the Terraform code is formatted correctly
+      run: |
+        cd terraform
+        terraform fmt -check -diff
+
+    - name: Terraform Plan # Create an execution plan
+      run: |
+        cd terraform
+        terraform plan -input=false
+
+    - name: Terraform Apply # Apply the changes
+      run: |
+        cd terraform
+        terraform apply -input=false -auto-approve
+
+  data_injection: # Data Injection job
+    name: 'Data Injection to DynamoDB'
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu
+    needs: terraform # Wait for the Terraform deployment job to complete
+
+    defaults:
+      run:
+        shell: bash # Use bash as the shell for all steps
+
+    steps:
+    - name: Checkout Code # Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python # Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Use Python 3.x
+
+    - name: Install Dependencies # Install boto3 library
+      run: pip install boto3
+
+    - name: Configure AWS Credentials  # Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with: # Use the AWS credentials from the secrets
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: 'eu-central-1'
+
+    - name: Run Data Injection Script # Run the data injection script
+      run: |
+        cd scripts
+        python3 data_injection.py

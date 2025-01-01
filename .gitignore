@@ -1,0 +1,14 @@
+/venv/
+/.idea/
+/.venv/
+/.pytest_cache/
+/terraform/terraform.tfstate
+/terraform/.terraform.tfstate.lock.info
+/terraform/terraform.tfstate.backup
+/terraform/.terraform/
+/terraform/.terraform.lock.hcl
+/website/tailwind/node_modules/
+/website/tailwind/package-lock.json
+/website/tailwind/package.json
+/website/
+/website-new/

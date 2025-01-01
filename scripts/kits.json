@@ -1,0 +1,182 @@
+[
+  {
+    "product_id": "1",
+    "team_name": "FC Barcelona",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kits",
+    "description": "Celebrate FC Barcelona's iconic legacy with the 24/25 home kit. A perfect piece for the most dedicated Barcelona supporters."
+  },
+  {
+    "product_id": "2",
+    "team_name": "Real Madrid",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kits",
+    "description": "Sport the prestigious Real Madrid 24/25 home kit. Designed for fans of the club's remarkable history and success."
+  },
+  {
+    "product_id": "3",
+    "team_name": "Arsenal",
+    "side": "home",
+    "season": "24/25",
+    "price": 110,
+    "tag": "kits",
+    "description": "Show your pride for the Gunners with the Arsenal 24/25 home kit. Ideal for any Arsenal fan looking to stand out."
+  },
+  {
+    "product_id": "4",
+    "team_name": "PSV",
+    "side": "home",
+    "season": "23/24",
+    "price": 70,
+    "tag": "kits",
+    "description": "Join the PSV faithful with the affordable 23/24 home kit, celebrating the heart of Eindhoven football."
+  },
+  {
+    "product_id": "5",
+    "team_name": "Borussia Dortmund",
+    "side": "away",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kits",
+    "description": "Back Borussia Dortmund with the stylish 24/25 away kit, perfect for any fan following their away-day success."
+  },
+  {
+    "product_id": "6",
+    "team_name": "Borussia Dortmund",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kits",
+    "description": "Stand out in yellow and black with Borussia Dortmund's 24/25 home kit. A classic for any Dortmund fan."
+  },
+  {
+    "product_id": "7",
+    "team_name": "Bayern Munchen",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kits",
+    "description": "Support Bayern Munich with the iconic red 24/25 home kit, crafted for champions and fans alike."
+  },
+  {
+    "product_id": "8",
+    "team_name": "PSG",
+    "side": "home",
+    "season": "13/14",
+    "price": 160,
+    "tag": "kits",
+    "description": "Own a rare piece of PSG history with the exclusive 13/14 home kit, a collectors item for true Paris supporters."
+  },
+  {
+    "product_id": "9",
+    "team_name": "Benfica",
+    "side": "third",
+    "season": "24/15",
+    "price": 90,
+    "tag": "kits",
+    "description": "Benfica's 24/15 third kit offers a bold alternative for fans looking to celebrate in style."
+  },
+  {
+    "product_id": "10",
+    "team_name": "Juventus",
+    "side": "home",
+    "season": "22/23",
+    "price": 50,
+    "tag": "kits",
+    "description": "Show your devotion to Juventus with their 22/23 home kit, reflecting the club's storied Italian heritage."
+  },
+  {
+    "product_id": "11",
+    "team_name": "AS Roma",
+    "side": "home",
+    "season": "23/24",
+    "price": 60,
+    "tag": "kits",
+    "description": "Display your love for AS Roma with the 23/24 home kit. Traditional colors meet modern design."
+  },
+  {
+    "product_id": "12",
+    "team_name": "AC Milan",
+    "side": "home",
+    "season": "23/24",
+    "price": 60,
+    "tag": "kits",
+    "description": "Support the Rossoneri with the official AC Milan 23/24 home kit, the perfect choice for Milan fans worldwide."
+  },
+  {
+    "product_id": "13",
+    "team_name": "PSV",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kits",
+    "description": "Get the PSV 24/25 home kit and support the pride of Eindhoven with this sleek design."
+  },
+  {
+    "product_id": "14",
+    "team_name": "FC Barcelona",
+    "side": "away",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kits",
+    "description": "Back Barcelona in style with their official 24/25 away kit. A must-have for loyal Barcelona supporters."
+  },
+  {
+    "product_id": "15",
+    "team_name": "Inter Miami",
+    "side": "home",
+    "season": "24/25",
+    "price": 80,
+    "tag": "kits",
+    "description": "Show your support for Inter Miami with their 24/25 home kit, a sleek and modern design for fans."
+  },
+  {
+    "product_id": "16",
+    "team_name": "Sevilla",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kits",
+    "description": "Support Sevilla with the 24/25 home kit, a modern design honoring the club's historic legacy."
+  },
+  {
+    "product_id": "17",
+    "team_name": "Real Betis",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kits",
+    "description": "Real Betis' 24/25 home kit reflects the heart and passion of their loyal supporters."
+  },
+  {
+    "product_id": "18",
+    "team_name": "Atalanta",
+    "side": "home",
+    "season": "24/25",
+    "price": 100,
+    "tag": "kits",
+    "description": "Cheer for Atalanta with their official 24/25 home kit. Designed to impress any fan of La Dea."
+  },
+  {
+    "product_id": "19",
+    "team_name": "Ajax",
+    "side": "home",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kits",
+    "description": "Ajax's 24/25 home kit represents the club's rich tradition in football, ideal for any Ajax fan."
+  },
+  {
+    "product_id": "20",
+    "team_name": "PSV",
+    "side": "third",
+    "season": "24/25",
+    "price": 90,
+    "tag": "kits",
+    "description": "PSV's 24/25 third kit brings a unique design for fans who want to stand out from the crowd."
+  }
+]

@@ -1,0 +1,66 @@
+name: 'CD for website files in main branch'
+
+on:
+  push:
+    branches: 
+      - 'main' # Pipeline will run only when code is pushed to the main branch
+    paths: 
+      - 'vue-website/**' # Pipeline will run only when code in the vue-website directory is changed
+
+jobs:
+  website:
+    name: 'Website deployment'
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu
+
+    defaults:
+      run:
+        shell: bash # Use bash as the shell for all steps
+
+    steps:
+    - name: Checkout repository # Checkout the repository 
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js # Setup Node.js version 22
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Set up Terraform CLI # Set up Terraform CLI 
+      uses: hashicorp/setup-terraform@v3
+    
+    - name: Terraform init # Initialize Terraform
+      run: |
+        cd terraform
+        terraform init  
+
+    - name: Install dependencies # Install dependencies for the website
+      run: | 
+       cd vue-website
+       npm install
+
+    - name: Build website # Build the website using npm run build command 
+      run: |
+        cd vue-website
+        npm run tailwindbuild
+        npm run build
+
+    - name: Configure AWS credentials # Configure AWS credentials for proper deployment
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: 'eu-central-1'
+
+    - name: Deploy to S3 bucket # Deploy the website to the S3 bucket
+      run: |
+        cd vue-website
+        aws s3 sync dist/ s3://nknez.tech/ --delete --region eu-central-1
+
+    - name: Fetch CloudFront distribution ID from Terraform output # Get the CloudFront distribution ID from the Terraform output
+      run: echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
+
+    - name: Invalidate CloudFront cache  # Invalidate the CloudFront cache to reflect the changes
+      run: |
+        cd terraform
+        aws cloudfront create-invalidation --distribution-id ${{ env.cloudfront_id }} --paths "/*"
+
