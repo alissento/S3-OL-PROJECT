@@ -37,6 +37,8 @@ jobs:
             FUNCTION_NAME=$(basename "${FILE%.*}")
             zip -r lambdas/packages/${FUNCTION_NAME}.zip ${FILE}
         done
+        cd lambdas/packages
+        ls -l
 
     - name: Setup Terraform CLI # Setup Terraform CLI
       uses: hashicorp/setup-terraform@v3
