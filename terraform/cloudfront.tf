@@ -1,5 +1,5 @@
 resource "aws_cloudfront_distribution" "s3_distribution" { // Define the CloudFront distribution for the S3 bucket
-  provider = aws.us-east-1 // Use the alias AWS provider for the us-east-1 region 
+  provider = aws.us-east-1                                 // Use the alias AWS provider for the us-east-1 region 
 
   aliases = [local.domain_name] // Define the domain name for the CloudFront distribution 
 
@@ -40,7 +40,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" { // Define the CloudFr
     minimum_protocol_version = "TLSv1.2_2021"
   }
 
-  depends_on = [ aws_acm_certificate_validation.tls_cert_validation ]
+  depends_on = [aws_acm_certificate_validation.tls_cert_validation]
 }
 
 resource "aws_acm_certificate" "tls-cert" { // Define the ACM certificate for the CloudFront distribution 
@@ -80,7 +80,7 @@ resource "aws_acm_certificate_validation" "tls_cert_validation" {
   certificate_arn         = aws_acm_certificate.tls-cert.arn
   validation_record_fqdns = [for record in aws_route53_record.tls_cert_validation_cname : record.fqdn]
 
-  depends_on = [ aws_acm_certificate.tls-cert ]
+  depends_on = [aws_acm_certificate.tls-cert]
 }
 
 resource "aws_route53_record" "record_for_cloudfront" { // Define the Route 53 record for the CloudFront distribution

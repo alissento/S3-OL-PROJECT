@@ -42,9 +42,9 @@ resource "aws_route53_record" "tls_cert_api_validation_cname" {
 
 resource "aws_acm_certificate_validation" "tls_cert_api_validation" {
   certificate_arn         = aws_acm_certificate.tls_cert_api.arn
-  validation_record_fqdns = [for record in aws_route53_record.tls_cert_api_validation_cname: record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.tls_cert_api_validation_cname : record.fqdn]
 
-  depends_on = [ aws_acm_certificate.tls_cert_api ]
+  depends_on = [aws_acm_certificate.tls_cert_api]
 }
 
 resource "aws_apigatewayv2_domain_name" "custom_domain_api_gw" {
@@ -55,7 +55,7 @@ resource "aws_apigatewayv2_domain_name" "custom_domain_api_gw" {
     security_policy = "TLS_1_2"
   }
 
-  depends_on = [ aws_acm_certificate_validation.tls_cert_api_validation ]
+  depends_on = [aws_acm_certificate_validation.tls_cert_api_validation]
 }
 
 resource "aws_apigatewayv2_api_mapping" "api_mapping" {
@@ -63,7 +63,7 @@ resource "aws_apigatewayv2_api_mapping" "api_mapping" {
   domain_name = aws_apigatewayv2_domain_name.custom_domain_api_gw.domain_name
   stage       = aws_apigatewayv2_stage.default_stage.name
 
-  depends_on = [ aws_acm_certificate_validation.tls_cert_api_validation ]
+  depends_on = [aws_acm_certificate_validation.tls_cert_api_validation]
 }
 
 resource "aws_route53_record" "custom_domain_api_gw_record" {
