@@ -40,7 +40,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'eu-central-1'
       run: |
-        for FILE in lambdas/packages/*.zip; do
+        for FILE in lambdas/*.zip; do
             FUNCTION_NAME=$(basename "${FILE%.*}")
             aws lambda update-function-code \
               --function-name ${FUNCTION_NAME} \
