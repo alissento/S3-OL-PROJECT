@@ -22,6 +22,22 @@ jobs:
     - name: Checkout Code # Checkout the repository
       uses: actions/checkout@v4
 
+    - name: Install AWS CLI # Install the AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y awscli 
+
+    - name: Install Dependencies # Install boto3 and simplejson libraries
+      run: pip install boto3 simplejson
+
+    - name: Package Lambda Functions # Create a zip file for each Lambda function
+      run: | 
+        mkdir -p lambdas/packages
+        for FILE in lambdas/*.py; do
+            FUNCTION_NAME=$(basename "${FILE%.*}")
+            zip -r lambdas/packages/${FUNCTION_NAME}.zip ${FILE}
+        done
+
     - name: Setup Terraform CLI # Setup Terraform CLI
       uses: hashicorp/setup-terraform@v3
 
