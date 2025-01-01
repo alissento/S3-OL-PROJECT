@@ -28,7 +28,19 @@ jobs:
 
     - name: Set up Terraform CLI # Set up Terraform CLI 
       uses: hashicorp/setup-terraform@v3
-    
+
+    - name: Install AWS CLI # Install the AWS CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y awscli 
+
+    - name: Configure AWS credentials # Configure AWS credentials for proper deployment
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: 'eu-central-1'
+        
     - name: Terraform init # Initialize Terraform
       run: |
         cd terraform
@@ -44,13 +56,6 @@ jobs:
         cd vue-website
         npm run tailwindbuild
         npm run build
-
-    - name: Configure AWS credentials # Configure AWS credentials for proper deployment
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: 'eu-central-1'
 
     - name: Deploy to S3 bucket # Deploy the website to the S3 bucket
       run: |
