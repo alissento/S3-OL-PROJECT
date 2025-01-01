@@ -1,6 +1,7 @@
 name: 'CD for website files in main branch'
 
 on:
+  workflow_dispatch:
   push:
     branches: 
       - 'main' # Pipeline will run only when code is pushed to the main branch

@@ -1,6 +1,7 @@
 name: 'CI/CD for Terraform and data injection in the main branch'
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main' # Pipeline will run only when code is pushed to the main branch

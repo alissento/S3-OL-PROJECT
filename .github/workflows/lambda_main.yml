@@ -1,6 +1,7 @@
 name: 'CI/CD for Lambda backend code deployment'
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main' # Pipeline will run only when code is pushed to the main branch
