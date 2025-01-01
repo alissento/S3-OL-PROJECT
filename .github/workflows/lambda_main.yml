@@ -27,11 +27,12 @@ jobs:
 
     - name: Package Lambda Functions # Create a zip file for each Lambda function
       run: | 
-        mkdir -p lambdas/packages
         for FILE in lambdas/*.py; do
             FUNCTION_NAME=$(basename "${FILE%.*}")
-            zip -r lambdas/packages/${FUNCTION_NAME}.zip ${FILE}
+            zip -r lambdas/${FUNCTION_NAME}.zip ${FILE}
         done
+        cd lambdas
+        ls -l
 
     - name: Deploy Lambda Functions # Update the code of each Lambda function
       env: # Set AWS credentials and region as environment variables
