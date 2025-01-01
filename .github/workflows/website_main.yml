@@ -63,7 +63,9 @@ jobs:
         aws s3 sync dist/ s3://nknez.tech/ --delete --region eu-central-1
 
     - name: Fetch CloudFront distribution ID from Terraform output # Get the CloudFront distribution ID from the Terraform output
-      run: echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
+      run: |
+        cd terraform
+        echo "cloudfront_id=$(terraform output -raw cloudfront_distribution_id)" >> $GITHUB_ENV
 
     - name: Invalidate CloudFront cache  # Invalidate the CloudFront cache to reflect the changes
       run: |
