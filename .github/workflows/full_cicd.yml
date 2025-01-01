@@ -99,7 +99,8 @@ jobs:
   website:
     name: 'Website deployment'
     runs-on: ubuntu-latest # Use the latest version of Ubuntu
-
+    needs: terraform
+    
     defaults:
       run:
         shell: bash # Use bash as the shell for all steps
