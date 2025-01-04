@@ -39,7 +39,7 @@
         >
             <RouterLink :to="{ name: 'productPage', params: { id: product.product_id } }">
             <img 
-                :src="'/images/'+product.photoID" 
+                :src="'/images/'+product.product_id+'/'+product.photoID" 
                 :alt='product.productLabel' 
                 class='h-64 w-56 object-cover mb-4 cursor-pointer'
             >

@@ -8,6 +8,7 @@ export default {
         karantina: ['Karantina'],
         roboto: ['Roboto'],
         poppins: ['Poppins'],
+        bricolage: ['Bricolage Grotesque'],
       },
     },
   },
