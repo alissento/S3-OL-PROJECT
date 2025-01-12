@@ -9,6 +9,7 @@ export default {
         roboto: ['Roboto'],
         poppins: ['Poppins'],
         bricolage: ['Bricolage Grotesque'],
+        archivo: ['Archivo'],
       },
     },
   },

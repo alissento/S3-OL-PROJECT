@@ -1,9 +1,5 @@
 <template>
-    <div id="discount" class="w-full h-12 bg-white text-center text-lg text-black flex items-center justify-center font-bricolage">
-        <span class="font-normal mr-8">Become a club member and get the 10% discount</span>
-        <RouterLink to="/register" class="font-bold"><button class="px-10 py-1 bg-blue-700 text-white rounded-sm">Register for free</button></RouterLink>
-    </div>
-    <footer class="bg-blue-700 text-white flex justify-between items-center p-5 text-2xl font-bricolage font-semibold">
+    <footer class="bg-[#111111] text-white flex justify-between items-center p-5 text-2xl last:font-semibold">
         <div class="flex-1 text-left ml-10">
             CONTACT US FOR ANY QUESTIONS!
         </div>
