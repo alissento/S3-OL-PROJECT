@@ -133,7 +133,7 @@
     <main v-else class="flex flex-grow">
         <div class="flex flex-col w-[50%] items-left text-left m-11 ml-[12%]">
             <img 
-                :src="'/images/' + product.photoID" 
+                :src="'/images/' + product.product_id + '/' + product.photoID" 
                 :alt="product.productLabel" 
                 class="h-[95%] w-[85%] rounded-xl border-[1px] border-black" 
             />

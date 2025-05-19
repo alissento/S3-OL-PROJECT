@@ -44,8 +44,8 @@
                 class='h-64 w-56 object-cover mb-4 cursor-pointer'
             >
             </RouterLink>
-            <p class='text-[22px] font-semibold text-center'>{{ product.productLabel }}</p>
-            <p class='text-3xl font-semibold text-center'>{{ product.price }}€</p>
+            <p class='text-[13px] font-semibold text-center'>{{ product.productLabel }}</p>
+            <p class='text-2xl font-semibold text-center'>{{ product.price }}€</p>
         </div>
     </main>
 </template>
